@@ -82,7 +82,6 @@ public class SwerveDrive extends SwerveDrivetrain implements Subsystem {
         });
 
         vision = Vision.getInstance();
-        
     }
 
     private void addExtraMotorConfigs() {
