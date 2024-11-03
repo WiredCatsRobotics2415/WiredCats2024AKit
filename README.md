@@ -10,9 +10,7 @@ Significant changes made to the 2024 code:
  - util is reorganized and any logic that should have been its own class is moved here
 
 Future plans:
- - cleanly disable all visualization stuff - probably with a global constant - so that it doesn't use unnecessary computing power
  - rework all commands in the commands/ folder so they look nice
- - make a GulikitController constants class to label controller buttons with their respective numbers
  - move all limit switch logic into its own IO for the arm subsystem and create an IO for use with the rev throughbore
  - add multiple limelight pose estimation support to the vision subsystem and make the pose estimation logic in SwerveDrive realistic
     - this means that the robot considers its acceleration when filtering pose estimates like ORBIT does

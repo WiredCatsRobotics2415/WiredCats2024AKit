@@ -11,8 +11,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.commands.AutoNoteDetect;
 import frc.commands.FixAll;
-import frc.commands.ShootingPresets;
+import frc.commands.ShootingCommands;
 import frc.constants.DriverControl;
+import frc.constants.Presets;
 import frc.constants.TunerConstants;
 import frc.robot.OIs.Bindings;
 import frc.robot.OIs.OI;
@@ -37,12 +38,9 @@ public class RobotContainer {
     private final Claw claw = Claw.getInstance();
     private final Vision vision = Vision.getInstance();
 
-    // OI
-    @Getter
-    private OI selectedOI;
+    @Getter private OI selectedOI;
 
     private SendableChooser<Command> autoChooser;
-    private ShootingPresets shootingPresets = new ShootingPresets(arm, claw, flywheel);
 
     private static RobotContainer instance;
 
@@ -50,7 +48,6 @@ public class RobotContainer {
         setupAuto();
         neutralizeSubsystems();
         configureStartupTriggers();
-        NoteVisualizer.renderNotes.schedule();
     }
 
     public static RobotContainer getInstance() {
@@ -76,27 +73,20 @@ public class RobotContainer {
     private void setupAuto() {
         // Autonomous named commands
         NamedCommands.registerCommand("Intake", intake.intakeAndWaitForNote());
-        NamedCommands.registerCommand("ShootSub", shootingPresets.subwooferAuto()); // Shoot next to subwoofer.
-        NamedCommands.registerCommand(
-                "ShootWhileMoving", shootingPresets.shootWhileMoving()); // Shoot next to subwoofer.
-        NamedCommands.registerCommand("ShootSlap", claw.fire()); // fire claw
-        NamedCommands.registerCommand(
-                "FlywheelOn",
-                flywheel.on(
-                        ShootingPresets.Settings.Subwoofer.leftFlywheel,
-                        ShootingPresets.Settings.Subwoofer.rightFlywheel)); // Shoot next to subwoofer.
-        NamedCommands.registerCommand("FlywheelOff", flywheel.off()); // Shoot next to subwoofer.
-        NamedCommands.registerCommand("Amp", shootingPresets.shootAmp()); // Score in Amp.
-        NamedCommands.registerCommand("ShootMiddle", shootingPresets.shootMiddle()); // Score in Amp.
-        NamedCommands.registerCommand("ShootBottom", shootingPresets.shootBottom()); // Score in Amp.
-        NamedCommands.registerCommand("shootTop", shootingPresets.shootTop()); // Score in Amp.
-        NamedCommands.registerCommand("ArmDown", new InstantCommand(() -> arm.setGoal(0))); // Score in Amp.
-        NamedCommands.registerCommand(
-                "ArmUp", new InstantCommand(() -> arm.setGoal(ShootingPresets.Settings.Field.bottom))); // Score in Amp.
-        NamedCommands.registerCommand("ShootMiddleCorner", shootingPresets.shootMiddleCorner()); // Score in Amp.
-        NamedCommands.registerCommand("ShootSubNoFly", shootingPresets.shootSubNoFly()); // Score in Amp.
-        NamedCommands.registerCommand("AutoAlign", new AutoNoteDetect()); // Score in Amp.
-        // TODO: add in commands for shooting and dropping notes
+        NamedCommands.registerCommand("ShootSub", ShootingCommands.subwooferAuto());
+        NamedCommands.registerCommand("ShootWhileMoving", ShootingCommands.shootWhileMoving());
+        NamedCommands.registerCommand("ShootSlap", claw.fire());
+        NamedCommands.registerCommand("FlywheelOn", flywheel.on(Presets.SubwooferShot.LeftFlywheelSpeed, Presets.SubwooferShot.RightFlywheelSpeed)); // Shoot next to subwoofer.
+        NamedCommands.registerCommand("FlywheelOff", flywheel.off());
+        NamedCommands.registerCommand("Amp", new InstantCommand(() -> arm.setGoal(Presets.AmpShot.ArmAngle)));
+        NamedCommands.registerCommand("ShootMiddle", ShootingCommands.shootMiddle());
+        NamedCommands.registerCommand("ShootBottom", ShootingCommands.shootBottom());
+        NamedCommands.registerCommand("shootTop", ShootingCommands.shootTop());
+        NamedCommands.registerCommand("ArmDown", new InstantCommand(() -> arm.setGoal(0)));
+        NamedCommands.registerCommand("ArmUp", new InstantCommand(() -> arm.setGoal(Presets.FieldShotAngles.Bottom)));
+        NamedCommands.registerCommand("ShootMiddleCorner", ShootingCommands.shootMiddleCorner());
+        NamedCommands.registerCommand("ShootSubNoFly", ShootingCommands.shootSubNoFly());
+        NamedCommands.registerCommand("AutoAlign", new AutoNoteDetect());
 
         // Configure auto chooser
         autoChooser = AutoBuilder.buildAutoChooser("Top_Slap");
@@ -174,9 +164,9 @@ public class RobotContainer {
 
         // Flywheel
         // TODO: change call to onFromSmartDashboard to a call to on(flwyheelSppeds)
-        selectedOI.binds.get(Bindings.ShootClose).onTrue(flywheel.onFromSmartDashboard());
+        selectedOI.binds.get(Bindings.ShootClose).onTrue(flywheel.on(Presets.SubwooferShot.LeftFlywheelSpeed, Presets.SubwooferShot.RightFlywheelSpeed));
         selectedOI.binds.get(Bindings.SpinOff).onTrue(flywheel.off());
-        selectedOI.binds.get(Bindings.SpinUpToAmp).onTrue(flywheel.on(3000, 3000));
+        selectedOI.binds.get(Bindings.SpinUpToAmp).onTrue(flywheel.on(Presets.AmpShot.LeftFlywheelSpeed, Presets.AmpShot.RightFlywheelSpeed));
         selectedOI.binds.get(Bindings.FixAll).whileTrue(new FixAll());
         // selectedOI.binds.get(Bindings.ArmAngle).onTrue(arm.moveToShotAngle());
 
@@ -198,7 +188,9 @@ public class RobotContainer {
          */
         // Presets
 
-        selectedOI.binds.get(Bindings.Amp).onTrue(shootingPresets.shootAmp());
+        selectedOI.binds.get(Bindings.Amp).onTrue(new InstantCommand(() -> {
+            arm.setGoal(Presets.AmpShot.ArmAngle);
+        }));
         selectedOI.binds.get(Bindings.ArmDrivePreset).onTrue(new InstantCommand(() -> {
             arm.setGoal(5);
         }));
@@ -219,12 +211,6 @@ public class RobotContainer {
 
     /** Adds all binds to triggers. Intended to be run in teleopInit. */
     private void configureTriggers() {
-        // new Trigger(intake::hasNote).onTrue(intake.queueNote());
-        // new Trigger(intake::noteIsQueued).onTrue(intake.stopNoteForShooting());
-        // new Trigger(intake::hasNote).onTrue(
-        //     claw.preventNoteFromContactingNote().andThen(
-        //     DriverFeedback.blinkInConfirmation())
-        // );
         new Trigger(intake::hasNote).onTrue(DriverFeedback.blinkInConfirmation());
     }
 

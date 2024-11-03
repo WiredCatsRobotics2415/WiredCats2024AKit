@@ -47,17 +47,6 @@ public class Flywheel extends SubsystemBase {
     }
 
     /**
-     * @return Command that calls on with speeds set from SmartDashboard.
-     */
-    public Command onFromSmartDashboard() {
-        return runOnce(() -> {
-            rightSetRPM = SmartDashboard.getNumber("Set Speed (Right Motor - RPM)", rightSetRPM);
-            leftSetRPM = SmartDashboard.getNumber("Set Speed (Left Motor - RPM)", leftSetRPM);
-            on(leftSetRPM, rightSetRPM).schedule();
-        });
-    }
-
-    /**
      * @return Command that sets both motor's RPM to 0. Note that the flywheels is in coast.
      */
     public Command off() {

@@ -6,7 +6,9 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import frc.constants.RobotMeasurements;
+import frc.constants.RuntimeConstants;
 import frc.constants.TunerConstants;
+import frc.robot.Robot;
 import frc.util.visualization.NoteVisualizer.Note;
 import lombok.Getter;
 import org.littletonrobotics.junction.Logger;
@@ -26,6 +28,7 @@ public class RobotVisualizer {
     private static Note currentNote = null;
 
     public static void update(double angle, double goal) {
+        if (Robot.isReal() && !RuntimeConstants.visualizationEnabledWhenReal) return;
         // Arm Real
         Pose3d poseAngle = new Pose3d(armTranslation3d, new Rotation3d(0, -Units.degreesToRadians(angle), 0));
         currentArmPose3d = poseAngle.minus(new Pose3d());

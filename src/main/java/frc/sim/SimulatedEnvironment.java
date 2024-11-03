@@ -21,6 +21,10 @@ public class SimulatedEnvironment {
     private final double maxNoteVisibleDistance = Units.feetToMeters(4.5);
     private final double maxNoteVisibleAngle = Units.degreesToRadians(20);
 
+    public SimulatedEnvironment() {
+        NoteVisualizer.renderNotes.schedule();
+    }
+
     public void updateEnvironment() {
         Pose2d robotPosition = TunerConstants.DriveTrain.getState().Pose;
         Translation2d intakePosition =

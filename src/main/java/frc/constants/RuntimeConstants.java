@@ -13,4 +13,5 @@ public final class RuntimeConstants {
     }
 
     public static final boolean tuningMode = false;
+    public static final boolean visualizationEnabledWhenReal = false;
 }
