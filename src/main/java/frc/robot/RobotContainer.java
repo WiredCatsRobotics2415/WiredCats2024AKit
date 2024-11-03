@@ -16,7 +16,6 @@ import frc.constants.DriverControl;
 import frc.constants.TunerConstants;
 import frc.robot.OIs.Bindings;
 import frc.robot.OIs.OI;
-import frc.robot.OIs.OI.TwoDControllerInput;
 import frc.subsystems.arm.Arm;
 import frc.subsystems.claw.Claw;
 import frc.subsystems.drive.SwerveDrive;
@@ -139,11 +138,11 @@ public class RobotContainer {
 
         // Swerve
         swerveDrive.setDefaultCommand(swerveDrive.applyRequest(() -> {
-            TwoDControllerInput input = selectedOI.getXY();
+            double[] input = selectedOI.getXY();
             return swerveDrive
                     .drive
-                    .withVelocityX(-input.x() * DriverControl.MaxDriveMeterS)
-                    .withVelocityY(-input.y() * DriverControl.MaxDriveMeterS)
+                    .withVelocityX(-input[0] * DriverControl.MaxDriveMeterS)
+                    .withVelocityY(-input[1] * DriverControl.MaxDriveMeterS)
                     .withRotationalRate(-selectedOI.getRotation() * DriverControl.MaxAngularRadS);
         }));
         selectedOI
