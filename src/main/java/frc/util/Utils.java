@@ -1,9 +1,13 @@
 package frc.util;
 
 import frc.constants.RuntimeConstants;
-import frc.constants.RuntimeConstants.Mode;
+import frc.constants.RuntimeConstants.SimMode;
 import frc.robot.Robot;
+import frc.util.Alert.AlertType;
+
 import java.lang.reflect.InvocationTargetException;
+
+import org.littletonrobotics.junction.Logger;
 
 public class Utils {
     /**
@@ -18,7 +22,7 @@ public class Utils {
         Class<?> attemptedInstantationType = real;
         try {
             if (Robot.isSimulation()) {
-                if (RuntimeConstants.simMode == Mode.REPLAY) {
+                if (RuntimeConstants.simMode == SimMode.REPLAY) {
                     attemptedInstantationType = replay;
                     return replay.getDeclaredConstructors()[0].newInstance();
                 } else {
@@ -30,10 +34,9 @@ public class Utils {
                 return real.getDeclaredConstructors()[0].newInstance();
             }
         } catch (InstantiationException | SecurityException | IllegalAccessException | InvocationTargetException e) {
-            System.out.println("WARNING: COULD NOT INSTANTIATE IO IMPLEMENTATION FOR CLASS "
-                    + attemptedInstantationType.getName()
-                    + ":");
             e.printStackTrace();
+            new Alert("COULD NOT INSTANTIATE IO IMPLEMENTATION FOR CLASS " + attemptedInstantationType.getName(), AlertType.ERROR)
+            .set(true);
         }
         return new Object();
     }

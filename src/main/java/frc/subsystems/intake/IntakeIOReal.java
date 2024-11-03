@@ -28,7 +28,7 @@ public class IntakeIOReal implements IntakeIO {
 
     private void configureMotor() {
         motor.optimizeBusUtilization();
-        motor.setInverted(Hardware.TalonFXDirection_CounterClockWise);
+        motor.setInverted(Hardware.TalonFXDirectionCounterClockWise);
         motor.setNeutralMode(NeutralModeValue.Brake);
         motor.getConfigurator().apply(IntakeConstants.CurrentLimit);
         // motor.getConfigurator().apply(new

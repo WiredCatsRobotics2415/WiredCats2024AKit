@@ -25,12 +25,12 @@ public class Hardware {
     }
 
     /** Looking from the BACK of the Motor */
-    public static final boolean TalonFXDirection_ClockWise = false;
+    public static final boolean TalonFXDirectionClockWise = false;
     /** Looking from the BACK of the Motor */
-    public static final boolean TalonFXDirection_CounterClockWise = true;
+    public static final boolean TalonFXDirectionCounterClockWise = true;
 
     /** Looking from the BACK of the Motor */
-    public static final boolean SparkMaxDirection_ClockWise = false;
+    public static final boolean SparkMaxDirectionClockWise = false;
     /** Looking from the BACK of the Motor */
-    public static final boolean SparkMaxDirection_CounterClockWise = true;
+    public static final boolean SparkMaxDirectionCounterClockWise = true;
 }

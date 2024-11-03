@@ -52,13 +52,13 @@ public class FlywheelIOReal implements FlywheelIO {
         rightCfg.apply(FlywheelConstants.RightMotorPID);
         rightCfg.apply(FlywheelConstants.CoastConfig);
         rightCfg.apply(FlywheelConstants.CurrentLimits);
-        right.setInverted(Hardware.TalonFXDirection_CounterClockWise);
+        right.setInverted(Hardware.TalonFXDirectionCounterClockWise);
 
         TalonFXConfigurator leftCfg = left.getConfigurator();
         leftCfg.apply(FlywheelConstants.LeftMotorPID);
         leftCfg.apply(FlywheelConstants.CoastConfig);
         leftCfg.apply(FlywheelConstants.CurrentLimits);
-        left.setInverted(Hardware.TalonFXDirection_ClockWise);
+        left.setInverted(Hardware.TalonFXDirectionClockWise);
     }
 
     @Override

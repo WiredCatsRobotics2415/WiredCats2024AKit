@@ -45,11 +45,11 @@ public class ArmIOReal implements ArmIO {
 
     public void configureMotors() {
         left = new TalonFX(ArmPorts.LeftMotorID);
-        left.setInverted(Hardware.TalonFXDirection_CounterClockWise);
+        left.setInverted(Hardware.TalonFXDirectionCounterClockWise);
 
         right = new TalonFX(ArmPorts.RightMotorID);
         right.setControl(new StrictFollower(left.getDeviceID()));
-        right.setInverted(Hardware.TalonFXDirection_CounterClockWise);
+        right.setInverted(Hardware.TalonFXDirectionCounterClockWise);
 
         left.setNeutralMode(NeutralModeValue.Brake);
         right.setNeutralMode(NeutralModeValue.Brake);
