@@ -8,9 +8,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.constants.DriverControl;
-import frc.constants.DriverControl.GulikitButtons;
-
+import frc.constants.Controls;
+import frc.constants.Controls.GulikitButtons;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,7 +47,10 @@ public class OIs {
         /** The binds map of an OI */
         public Map<Bindings, Trigger> binds = new HashMap<Bindings, Trigger>();
 
-        /** Get appropriately scaled translation values, in raw controller units [-1, 1]. Array order is [x, y]. */
+        /**
+         * Get appropriately scaled translation values, in raw controller units [-1, 1]. Array order is
+         * [x, y].
+         */
         public abstract double[] getXY();
 
         /** Get appropriately scaled rotation values, in raw controller units [-1, 1] */
@@ -61,17 +63,17 @@ public class OIs {
         CommandXboxController controller;
         CommandJoystick numpad;
 
-        private SlewRateLimiter xLimiter = new SlewRateLimiter(DriverControl.SlewRate);
-        private SlewRateLimiter yLimiter = new SlewRateLimiter(DriverControl.SlewRate);
+        private SlewRateLimiter xLimiter = new SlewRateLimiter(Controls.SlewRate);
+        private SlewRateLimiter yLimiter = new SlewRateLimiter(Controls.SlewRate);
 
         public GulikitController() {
             controller = new CommandXboxController(0);
             numpad = new CommandJoystick(1);
-            
-            //Swerve
+
+            // Swerve
             binds.put(Bindings.PigeonReset, controller.button(GulikitButtons.Minus, Robot.buttonEventLoop));
 
-            //Arm
+            // Arm
             binds.put(Bindings.LowerArm, controller.button(GulikitButtons.LeftBumper, Robot.buttonEventLoop));
             binds.put(Bindings.RaiseArm, controller.button(GulikitButtons.RightBumper, Robot.buttonEventLoop));
             binds.put(Bindings.Amp, numpad.button(4, Robot.buttonEventLoop));
@@ -80,18 +82,20 @@ public class OIs {
             binds.put(Bindings.ArmAngle, numpad.button(2, Robot.buttonEventLoop));
             binds.put(Bindings.FixArm, numpad.button(3, Robot.buttonEventLoop));
 
-            //Intake
+            // Intake
             binds.put(Bindings.Intake, controller.button(GulikitButtons.A, Robot.buttonEventLoop));
             binds.put(Bindings.AutoIntake, controller.button(GulikitButtons.B, Robot.buttonEventLoop));
-            binds.put(Bindings.ManualOuttake, controller.axisGreaterThan(GulikitButtons.LeftTrigger, 0.5, Robot.buttonEventLoop));
+            binds.put(
+                    Bindings.ManualOuttake,
+                    controller.axisGreaterThan(GulikitButtons.LeftTrigger, 0.5, Robot.buttonEventLoop));
             binds.put(Bindings.ManualIntake, numpad.button(8, Robot.buttonEventLoop));
 
-            //Flywheels
+            // Flywheels
             binds.put(Bindings.SpinOff, numpad.button(8, Robot.buttonEventLoop));
             binds.put(Bindings.SpinUpToAmp, numpad.button(9, Robot.buttonEventLoop));
             binds.put(Bindings.ShootClose, numpad.button(7, Robot.buttonEventLoop));
-            
-            //Claw
+
+            // Claw
             binds.put(Bindings.Shoot, controller.axisLessThan(GulikitButtons.RightTrigger, 0.5));
             binds.put(Bindings.ReverseClaw, controller.button(GulikitButtons.Plus, Robot.buttonEventLoop));
 
@@ -99,21 +103,23 @@ public class OIs {
         }
 
         private double deadbandCompensation(double r) {
-            return (r - DriverControl.Deadband) / (1 - DriverControl.Deadband);
+            return (r - Controls.Deadband) / (1 - Controls.Deadband);
         }
 
         private double minimumPowerCompensation(double r) {
-            return r * (1 - DriverControl.MinimumDrivePower) + DriverControl.MinimumDrivePower;
+            return r * (1 - Controls.MinimumDrivePower) + Controls.MinimumDrivePower;
         }
 
         public double[] getXY() {
-            double x = MathUtil.applyDeadband(controller.getRawAxis(GulikitButtons.LeftJoystickX), DriverControl.Deadband);
-            double y = MathUtil.applyDeadband(controller.getRawAxis(GulikitButtons.LeftJoystickY), DriverControl.Deadband);
+            double x =
+                    MathUtil.applyDeadband(controller.getRawAxis(GulikitButtons.LeftJoystickX), Controls.Deadband);
+            double y =
+                    MathUtil.applyDeadband(controller.getRawAxis(GulikitButtons.LeftJoystickY), Controls.Deadband);
             double newX, newY = 0.0d;
-            if (DriverControl.UseCurve) {
+            if (Controls.UseCurve) {
                 double angle = Math.atan2(y, x);
                 double magInitial = Math.sqrt(x * x + y * y);
-                double magCurved = Math.pow(deadbandCompensation(magInitial), DriverControl.CurveExponent);
+                double magCurved = Math.pow(deadbandCompensation(magInitial), Controls.CurveExponent);
                 double powerCompensated = minimumPowerCompensation(magCurved);
                 newX = Math.cos(angle) * powerCompensated;
                 newY = Math.sin(angle) * powerCompensated;
@@ -127,10 +133,10 @@ public class OIs {
         }
 
         public double getRotation() {
-            double deadbandCompensated =
-                    deadbandCompensation(MathUtil.applyDeadband(controller.getRawAxis(GulikitButtons.RightJoystickX), DriverControl.Deadband));
-            if (DriverControl.UseCurve) {
-                return Math.pow(minimumPowerCompensation(deadbandCompensated), DriverControl.CurveExponent);
+            double deadbandCompensated = deadbandCompensation(MathUtil.applyDeadband(
+                    controller.getRawAxis(GulikitButtons.RightJoystickX), Controls.Deadband));
+            if (Controls.UseCurve) {
+                return Math.pow(minimumPowerCompensation(deadbandCompensated), Controls.CurveExponent);
             } else {
                 return minimumPowerCompensation(deadbandCompensated);
             }

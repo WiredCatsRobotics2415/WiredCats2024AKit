@@ -11,7 +11,22 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 
 public class Subsystems {
+    /** Looking from the BACK of the Motor */
+    public static final boolean TalonFXDirectionClockWise = false;
+    /** Looking from the BACK of the Motor */
+    public static final boolean TalonFXDirectionCounterClockWise = true;
+
+    /** Looking from the BACK of the Motor */
+    public static final boolean SparkMaxDirectionClockWise = false;
+    /** Looking from the BACK of the Motor */
+    public static final boolean SparkMaxDirectionCounterClockWise = true;
+
     public class ArmConstants {
+        public static final int LeftMotorID = 32;
+        public static final int RightMotorID = 14;
+        public static final int Potentiometer = 4;
+        public static final int LimitSwitch = 1;
+
         public static final double kS = 0.238d;
         public static final double kV = 1e-4d; // effectively 0
         public static final double kA = 1e-4d; // effectively 0
@@ -45,6 +60,9 @@ public class Subsystems {
     }
 
     public class FlywheelConstants {
+        public static final int LeftMotorID = 20;
+        public static final int RightMotorID = 16;
+
         public static final Slot0Configs LeftMotorPID =
                 new Slot0Configs().withKV(0.14).withKP(0.25);
         public static final Slot0Configs RightMotorPID =
@@ -74,6 +92,9 @@ public class Subsystems {
     }
 
     public class IntakeConstants {
+        public static final int IntakeMotorID = 18;
+        public static final int FlywheelIR = 5;
+
         public static final CurrentLimitsConfigs CurrentLimit =
                 new CurrentLimitsConfigs().withSupplyCurrentThreshold(40);
 
@@ -84,6 +105,8 @@ public class Subsystems {
     }
 
     public class ClawConstants {
+        public static final int MotorID = 15;
+
         public static final int CurrentLimit = 30;
         public static final int GearRatio = 12;
 

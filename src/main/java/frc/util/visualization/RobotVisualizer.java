@@ -5,7 +5,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
-import frc.constants.RobotMeasurements;
+import frc.constants.Measurements;
 import frc.constants.RuntimeConstants;
 import frc.constants.TunerConstants;
 import frc.robot.Robot;
@@ -48,7 +48,7 @@ public class RobotVisualizer {
             NoteVisualizer.updateNoteTrajectory(currentNote);
         }
 
-        Logger.recordOutput("Camera/BackLL", robotPosition.plus(RobotMeasurements.BackLLTransform));
+        Logger.recordOutput("Camera/BackLL", robotPosition.plus(Measurements.BackLLTransform));
     }
 
     public static boolean hasNote() {

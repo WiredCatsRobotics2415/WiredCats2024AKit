@@ -7,7 +7,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.constants.FieldMeasurements;
+import frc.constants.Measurements;
 
 /** An instance of a hotspot */
 public class Hotspot {
@@ -28,7 +28,7 @@ public class Hotspot {
         this.x = x;
         this.y = y;
         this.targetCoords = new Translation2d(this.x, this.y);
-        this.speakerLocation = FieldMeasurements.getSpeakerLocation();
+        this.speakerLocation = Measurements.getSpeakerLocation();
     }
 
     /**

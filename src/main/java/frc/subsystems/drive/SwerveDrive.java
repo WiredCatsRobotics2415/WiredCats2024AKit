@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.constants.DriverControl;
+import frc.constants.Controls;
 import frc.constants.Subsystems.SwerveConstants;
 import frc.constants.Subsystems.VisionConstants;
 import frc.constants.TunerConstants;
@@ -43,11 +43,11 @@ public class SwerveDrive extends SwerveDrivetrain implements Subsystem {
     private final SwerveRequest.ApplyChassisSpeeds autoRequest =
             new SwerveRequest.ApplyChassisSpeeds().withDriveRequestType(DriveRequestType.Velocity);
     public final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(DriverControl.MaxDriveMeterS * 0.05)
-            .withRotationalDeadband(DriverControl.MaxAngularRadS * 0.05) // Add a 5% deadband
+            .withDeadband(Controls.MaxDriveMeterS * 0.05)
+            .withRotationalDeadband(Controls.MaxAngularRadS * 0.05) // Add a 5% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
     public final SwerveRequest.FieldCentricFacingAngle driveFacingAngle = new SwerveRequest.FieldCentricFacingAngle()
-            .withDeadband(DriverControl.MaxDriveMeterS * 0.05)
+            .withDeadband(Controls.MaxDriveMeterS * 0.05)
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
     private SwerveDriveInputsAutoLogged inputs = new SwerveDriveInputsAutoLogged();
@@ -184,13 +184,6 @@ public class SwerveDrive extends SwerveDrivetrain implements Subsystem {
         for (int i = 0; i < 4; i++) {
             getModule(i).apply(new SwerveModuleState(0, Rotation2d.fromDegrees(0)), DriveRequestType.OpenLoopVoltage);
         }
-    }
-
-    private double getTranslationSpeed() {
-        ChassisSpeeds currentChassisSpeeds = getCurrentRobotChassisSpeeds();
-        double x = currentChassisSpeeds.vxMetersPerSecond;
-        double y = currentChassisSpeeds.vyMetersPerSecond;
-        return Math.sqrt((x * x) + (y * y));
     }
 
     @Override

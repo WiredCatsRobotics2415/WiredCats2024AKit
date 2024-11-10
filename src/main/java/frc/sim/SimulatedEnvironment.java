@@ -4,8 +4,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
-import frc.constants.FieldMeasurements;
-import frc.constants.RobotMeasurements;
+import frc.constants.Measurements;
 import frc.constants.TunerConstants;
 import frc.subsystems.arm.Arm;
 import frc.subsystems.intake.Intake;
@@ -28,7 +27,7 @@ public class SimulatedEnvironment {
     public void updateEnvironment() {
         Pose2d robotPosition = TunerConstants.DriveTrain.getState().Pose;
         Translation2d intakePosition =
-                robotPosition.plus(RobotMeasurements.IntakeDownTransform).getTranslation();
+                robotPosition.plus(Measurements.IntakeDownTransform).getTranslation();
 
         boolean canIntake = !RobotVisualizer.hasNote()
                 && Arm.getInstance().getGoalInDegrees() < 1.0d
@@ -38,7 +37,7 @@ public class SimulatedEnvironment {
         for (Note note : NoteVisualizer.getCurrentNotes()) {
             Translation2d noteTranslation = note.getPose().getTranslation().toTranslation2d();
             double distance = intakePosition.getDistance(noteTranslation);
-            if (canIntake && distance <= FieldMeasurements.NoteDiameter * 1.5 && !note.isBeingShot()) {
+            if (canIntake && distance <= Measurements.NoteDiameter * 1.5 && !note.isBeingShot()) {
                 RobotVisualizer.takeNote(note);
             }
             if (distance < maxNoteVisibleDistance) {
@@ -57,7 +56,7 @@ public class SimulatedEnvironment {
     public void resetField(boolean includePreload) {
         NoteVisualizer.clearNotes();
         RobotVisualizer.removeNote();
-        for (Translation3d notePosition : FieldMeasurements.DefaultFieldNotes) {
+        for (Translation3d notePosition : Measurements.DefaultFieldNotes) {
             new Note(notePosition); // Just constructing it automatically adds it to currentNotes
         }
         if (includePreload)

@@ -5,8 +5,6 @@ import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.AnalogInput;
-import frc.constants.Hardware;
-import frc.constants.Hardware.IntakePorts;
 import frc.constants.Subsystems;
 import frc.constants.Subsystems.IntakeConstants;
 
@@ -19,16 +17,16 @@ public class IntakeIOReal implements IntakeIO {
     private StatusSignal<Double> motorTemp = motor.getDeviceTemp();
 
     public IntakeIOReal() {
-        motor = new TalonFX(IntakePorts.IntakeMotorID);
+        motor = new TalonFX(IntakeConstants.IntakeMotorID);
         BaseStatusSignal.setUpdateFrequencyForAll(50, motorStatorCurrent, motorSupplyCurrent, motorTemp);
         configureMotor();
 
-        closeToFlywheelSensor = new AnalogInput(IntakePorts.FlywheelIR);
+        closeToFlywheelSensor = new AnalogInput(IntakeConstants.FlywheelIR);
     }
 
     private void configureMotor() {
         motor.optimizeBusUtilization();
-        motor.setInverted(Hardware.TalonFXDirectionCounterClockWise);
+        motor.setInverted(Subsystems.TalonFXDirectionCounterClockWise);
         motor.setNeutralMode(NeutralModeValue.Brake);
         motor.getConfigurator().apply(IntakeConstants.CurrentLimit);
         // motor.getConfigurator().apply(new

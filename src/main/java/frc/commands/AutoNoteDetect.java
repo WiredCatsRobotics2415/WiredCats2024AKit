@@ -4,7 +4,7 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.constants.DriverControl;
+import frc.constants.Controls;
 import frc.constants.Subsystems.SwerveConstants;
 import frc.constants.TunerConstants;
 import frc.subsystems.intake.Intake;
@@ -18,7 +18,7 @@ public class AutoNoteDetect extends Command {
 
     // SWERVE
     private final SwerveRequest.RobotCentric driveForward =
-            new SwerveRequest.RobotCentric().withVelocityX(0.5 * DriverControl.MaxDriveMeterS);
+            new SwerveRequest.RobotCentric().withVelocityX(0.5 * Controls.MaxDriveMeterS);
 
     public AutoNoteDetect() {
         addRequirements(TunerConstants.DriveTrain);

@@ -1,7 +1,9 @@
 package frc.constants;
 
-import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
@@ -9,7 +11,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import frc.commands.Hotspot;
 import java.util.ArrayList;
 
-public class FieldMeasurements {
+public class Measurements {
     private static final Translation3d BlueSpeaker = new Translation3d(0.225, 5.55, 2.1);
     private static final Translation3d RedSpeaker = new Translation3d(16.317, 5.55, 2.1);
 
@@ -21,16 +23,6 @@ public class FieldMeasurements {
                     : BlueSpeaker.toTranslation2d();
         }
         return BlueSpeaker.toTranslation2d();
-    }
-
-    public static final Pose3d getSpeakerLocationAsPose() {
-        var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent()) {
-            return alliance.get() == DriverStation.Alliance.Red
-                    ? new Pose3d(RedSpeaker, new Rotation3d())
-                    : new Pose3d(BlueSpeaker, new Rotation3d());
-        }
-        return new Pose3d(BlueSpeaker, new Rotation3d());
     }
 
     public static final ArrayList<Hotspot> Hotspots = new ArrayList<Hotspot>();
@@ -62,4 +54,10 @@ public class FieldMeasurements {
     }
 
     public static final double NoteDiameter = Units.inchesToMeters(14);
+
+    public static final Transform2d IntakeDownTransform = new Transform2d(0.5525, 0, new Rotation2d());
+
+    public static final Transform3d BackLLTransform = new Transform3d(
+            new Translation3d(Units.inchesToMeters(-12.815), 0, Units.inchesToMeters(10)),
+            new Rotation3d(Units.degreesToRadians(-90), Units.degreesToRadians(30), 0));
 }

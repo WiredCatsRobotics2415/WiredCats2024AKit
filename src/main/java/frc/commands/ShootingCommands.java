@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import frc.constants.Presets;
+import frc.constants.Controls;
 import frc.subsystems.arm.Arm;
 import frc.subsystems.claw.Claw;
 import frc.subsystems.flywheel.Flywheel;
@@ -15,8 +15,9 @@ public class ShootingCommands {
     /** Fire next to subwoofer */
     public static final Command shootClose() {
         return new ParallelCommandGroup(
-                new InstantCommand(() -> Arm.getInstance().setGoal(Presets.SubwooferShot.ArmAngle)),
-                Flywheel.getInstance().on(Presets.SubwooferShot.LeftFlywheelSpeed, Presets.SubwooferShot.RightFlywheelSpeed));
+                new InstantCommand(() -> Arm.getInstance().setGoal(Controls.SubwooferShot.ArmAngle)),
+                Flywheel.getInstance()
+                        .on(Controls.SubwooferShot.LeftFlywheelSpeed, Controls.SubwooferShot.RightFlywheelSpeed));
     }
 
     /** Fire next to subwoofer and then stop the Flywheel.getInstance() during autonomous. */
@@ -31,7 +32,10 @@ public class ShootingCommands {
     }
 
     public static final Command shootWhileMoving() {
-        return new SequentialCommandGroup(Claw.getInstance().fire(), new WaitCommand(0.5), Flywheel.getInstance().off());
+        return new SequentialCommandGroup(
+                Claw.getInstance().fire(),
+                new WaitCommand(0.5),
+                Flywheel.getInstance().off());
     }
 
     public static final Command shootSubNoFly() {
@@ -40,7 +44,7 @@ public class ShootingCommands {
 
     public static final Command shootMiddle() {
         return new SequentialCommandGroup(
-                new InstantCommand(() -> Arm.getInstance().setGoal(Presets.FieldShotAngles.MiddleCenter)),
+                new InstantCommand(() -> Arm.getInstance().setGoal(Controls.FieldShotAngles.MiddleCenter)),
                 new WaitUntilCommand(() -> Arm.getInstance().withinSetGoalTolerance()),
                 Claw.getInstance().fire(),
                 new WaitCommand(0.5));
@@ -48,7 +52,7 @@ public class ShootingCommands {
 
     public static final Command shootMiddleCorner() {
         return new SequentialCommandGroup(
-                new InstantCommand(() -> Arm.getInstance().setGoal(Presets.FieldShotAngles.MiddleCorner)),
+                new InstantCommand(() -> Arm.getInstance().setGoal(Controls.FieldShotAngles.MiddleCorner)),
                 new WaitUntilCommand(() -> Arm.getInstance().withinSetGoalTolerance()),
                 Claw.getInstance().fire(),
                 new WaitCommand(0.5));
@@ -56,7 +60,9 @@ public class ShootingCommands {
 
     public static final Command shootTop() {
         return new SequentialCommandGroup(
-                new InstantCommand(() -> Arm.getInstance().setGoal(Presets.FieldShotAngles.Top)), Claw.getInstance().fire(), new WaitCommand(0.5));
+                new InstantCommand(() -> Arm.getInstance().setGoal(Controls.FieldShotAngles.Top)),
+                Claw.getInstance().fire(),
+                new WaitCommand(0.5));
     }
 
     public static final Command shootBottom() {

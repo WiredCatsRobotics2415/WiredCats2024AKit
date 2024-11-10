@@ -4,10 +4,7 @@ import frc.constants.RuntimeConstants;
 import frc.constants.RuntimeConstants.SimMode;
 import frc.robot.Robot;
 import frc.util.Alert.AlertType;
-
 import java.lang.reflect.InvocationTargetException;
-
-import org.littletonrobotics.junction.Logger;
 
 public class Utils {
     /**
@@ -35,8 +32,10 @@ public class Utils {
             }
         } catch (InstantiationException | SecurityException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
-            new Alert("COULD NOT INSTANTIATE IO IMPLEMENTATION FOR CLASS " + attemptedInstantationType.getName(), AlertType.ERROR)
-            .set(true);
+            new Alert(
+                            "COULD NOT INSTANTIATE IO IMPLEMENTATION FOR CLASS " + attemptedInstantationType.getName(),
+                            AlertType.ERROR)
+                    .set(true);
         }
         return new Object();
     }

@@ -12,8 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.commands.AutoNoteDetect;
 import frc.commands.FixAll;
 import frc.commands.ShootingCommands;
-import frc.constants.DriverControl;
-import frc.constants.Presets;
+import frc.constants.Controls;
 import frc.constants.TunerConstants;
 import frc.robot.OIs.Bindings;
 import frc.robot.OIs.OI;
@@ -22,11 +21,9 @@ import frc.subsystems.claw.Claw;
 import frc.subsystems.drive.SwerveDrive;
 import frc.subsystems.flywheel.Flywheel;
 import frc.subsystems.intake.Intake;
-import frc.subsystems.vision.Vision;
 import frc.util.driver.DashboardManager;
 import frc.util.driver.DashboardManager.LayoutConstants;
 import frc.util.driver.DriverFeedback;
-import frc.util.visualization.NoteVisualizer;
 import lombok.Getter;
 
 public class RobotContainer {
@@ -36,9 +33,9 @@ public class RobotContainer {
     private final Flywheel flywheel = Flywheel.getInstance();
     private final Intake intake = Intake.getInstance();
     private final Claw claw = Claw.getInstance();
-    private final Vision vision = Vision.getInstance();
 
-    @Getter private OI selectedOI;
+    @Getter
+    private OI selectedOI;
 
     private SendableChooser<Command> autoChooser;
 
@@ -76,14 +73,18 @@ public class RobotContainer {
         NamedCommands.registerCommand("ShootSub", ShootingCommands.subwooferAuto());
         NamedCommands.registerCommand("ShootWhileMoving", ShootingCommands.shootWhileMoving());
         NamedCommands.registerCommand("ShootSlap", claw.fire());
-        NamedCommands.registerCommand("FlywheelOn", flywheel.on(Presets.SubwooferShot.LeftFlywheelSpeed, Presets.SubwooferShot.RightFlywheelSpeed)); // Shoot next to subwoofer.
+        NamedCommands.registerCommand(
+                "FlywheelOn",
+                flywheel.on(
+                        Controls.SubwooferShot.LeftFlywheelSpeed,
+                        Controls.SubwooferShot.RightFlywheelSpeed)); // Shoot next to subwoofer.
         NamedCommands.registerCommand("FlywheelOff", flywheel.off());
-        NamedCommands.registerCommand("Amp", new InstantCommand(() -> arm.setGoal(Presets.AmpShot.ArmAngle)));
+        NamedCommands.registerCommand("Amp", new InstantCommand(() -> arm.setGoal(Controls.AmpShot.ArmAngle)));
         NamedCommands.registerCommand("ShootMiddle", ShootingCommands.shootMiddle());
         NamedCommands.registerCommand("ShootBottom", ShootingCommands.shootBottom());
         NamedCommands.registerCommand("shootTop", ShootingCommands.shootTop());
         NamedCommands.registerCommand("ArmDown", new InstantCommand(() -> arm.setGoal(0)));
-        NamedCommands.registerCommand("ArmUp", new InstantCommand(() -> arm.setGoal(Presets.FieldShotAngles.Bottom)));
+        NamedCommands.registerCommand("ArmUp", new InstantCommand(() -> arm.setGoal(Controls.FieldShotAngles.Bottom)));
         NamedCommands.registerCommand("ShootMiddleCorner", ShootingCommands.shootMiddleCorner());
         NamedCommands.registerCommand("ShootSubNoFly", ShootingCommands.shootSubNoFly());
         NamedCommands.registerCommand("AutoAlign", new AutoNoteDetect());
@@ -131,9 +132,9 @@ public class RobotContainer {
             double[] input = selectedOI.getXY();
             return swerveDrive
                     .drive
-                    .withVelocityX(-input[0] * DriverControl.MaxDriveMeterS)
-                    .withVelocityY(-input[1] * DriverControl.MaxDriveMeterS)
-                    .withRotationalRate(-selectedOI.getRotation() * DriverControl.MaxAngularRadS);
+                    .withVelocityX(-input[0] * Controls.MaxDriveMeterS)
+                    .withVelocityY(-input[1] * Controls.MaxDriveMeterS)
+                    .withRotationalRate(-selectedOI.getRotation() * Controls.MaxAngularRadS);
         }));
         selectedOI
                 .binds
@@ -164,9 +165,15 @@ public class RobotContainer {
 
         // Flywheel
         // TODO: change call to onFromSmartDashboard to a call to on(flwyheelSppeds)
-        selectedOI.binds.get(Bindings.ShootClose).onTrue(flywheel.on(Presets.SubwooferShot.LeftFlywheelSpeed, Presets.SubwooferShot.RightFlywheelSpeed));
+        selectedOI
+                .binds
+                .get(Bindings.ShootClose)
+                .onTrue(flywheel.on(Controls.SubwooferShot.LeftFlywheelSpeed, Controls.SubwooferShot.RightFlywheelSpeed));
         selectedOI.binds.get(Bindings.SpinOff).onTrue(flywheel.off());
-        selectedOI.binds.get(Bindings.SpinUpToAmp).onTrue(flywheel.on(Presets.AmpShot.LeftFlywheelSpeed, Presets.AmpShot.RightFlywheelSpeed));
+        selectedOI
+                .binds
+                .get(Bindings.SpinUpToAmp)
+                .onTrue(flywheel.on(Controls.AmpShot.LeftFlywheelSpeed, Controls.AmpShot.RightFlywheelSpeed));
         selectedOI.binds.get(Bindings.FixAll).whileTrue(new FixAll());
         // selectedOI.binds.get(Bindings.ArmAngle).onTrue(arm.moveToShotAngle());
 
@@ -189,7 +196,7 @@ public class RobotContainer {
         // Presets
 
         selectedOI.binds.get(Bindings.Amp).onTrue(new InstantCommand(() -> {
-            arm.setGoal(Presets.AmpShot.ArmAngle);
+            arm.setGoal(Controls.AmpShot.ArmAngle);
         }));
         selectedOI.binds.get(Bindings.ArmDrivePreset).onTrue(new InstantCommand(() -> {
             arm.setGoal(5);

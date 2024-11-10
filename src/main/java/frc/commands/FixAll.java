@@ -4,7 +4,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.constants.FieldMeasurements;
+import frc.constants.Measurements;
 import frc.constants.Subsystems.SwerveConstants;
 import frc.constants.TunerConstants;
 
@@ -22,7 +22,7 @@ public class FixAll extends Command {
 
     @Override
     public void initialize() {
-        Translation2d speakerDist = FieldMeasurements.getSpeakerLocation()
+        Translation2d speakerDist = Measurements.getSpeakerLocation()
                 .minus(TunerConstants.DriveTrain.getState().Pose.getTranslation());
         goalHeading = Rotation2d.fromRadians(Math.atan2(speakerDist.getY(), speakerDist.getX()))
                 .plus(Rotation2d.fromDegrees(180));

@@ -9,10 +9,9 @@ public class ProjectileMotion3d {
     private Pose3d startPose;
 
     /**
-     * Projectile equation in 3d
-     * given a speed and start pose, generates pose3ds at a time t
-     * where each pose3d is where the object would be at that time if it started at
-     * speedMPS and was shot forward on the startPose-relative forward
+     * Projectile equation in 3d given a speed and start pose, generates pose3ds at a time t where
+     * each pose3d is where the object would be at that time if it started at speedMPS and was shot
+     * forward on the startPose-relative forward
      */
     public ProjectileMotion3d(Pose3d start, double speedMPS) {
         this.speedMPS = speedMPS;

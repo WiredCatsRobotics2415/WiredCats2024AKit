@@ -5,7 +5,6 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
-import frc.constants.Hardware.ClawPorts;
 import frc.constants.Subsystems.ClawConstants;
 
 public class ClawIOReal implements ClawIO {
@@ -14,7 +13,7 @@ public class ClawIOReal implements ClawIO {
     private RelativeEncoder relativeEncoder;
 
     public ClawIOReal() {
-        motor = new CANSparkMax(ClawPorts.MotorID, CANSparkMax.MotorType.kBrushless);
+        motor = new CANSparkMax(ClawConstants.MotorID, CANSparkMax.MotorType.kBrushless);
         configureMotor();
     }
 

@@ -17,7 +17,8 @@ import org.littletonrobotics.junction.Logger;
 public class NoteVisualizer {
     private static final double shotSpeed = 8.5; // Meters per sec
     private static final double timeScale =
-            0.2; // Time to multiply timer.get calls by; speeds up or slows down a shot but does not impact velocity
+            0.2; // Time to multiply timer.get calls by; speeds up or slows down a shot but does not
+    // impact velocity
     // private static final double shotSpeed = 0.5; // Meters per sec
     private static final double trajectoryTimestep = 0.05;
 

@@ -5,8 +5,8 @@ import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
-import frc.constants.Hardware;
-import frc.constants.Hardware.FlywheelPorts;
+
+import frc.constants.Subsystems;
 import frc.constants.Subsystems.FlywheelConstants;
 
 public class FlywheelIOReal implements FlywheelIO {
@@ -27,8 +27,8 @@ public class FlywheelIOReal implements FlywheelIO {
     private StatusSignal<Double> rightAppliedVolts = right.getMotorVoltage();
 
     public FlywheelIOReal() {
-        left = new TalonFX(FlywheelPorts.LeftMotorID);
-        right = new TalonFX(FlywheelPorts.RightMotorID);
+        left = new TalonFX(FlywheelConstants.LeftMotorID);
+        right = new TalonFX(FlywheelConstants.RightMotorID);
         BaseStatusSignal.setUpdateFrequencyForAll(
                 50,
                 leftRotorVelocity,
@@ -52,13 +52,13 @@ public class FlywheelIOReal implements FlywheelIO {
         rightCfg.apply(FlywheelConstants.RightMotorPID);
         rightCfg.apply(FlywheelConstants.CoastConfig);
         rightCfg.apply(FlywheelConstants.CurrentLimits);
-        right.setInverted(Hardware.TalonFXDirectionCounterClockWise);
+        right.setInverted(Subsystems.TalonFXDirectionCounterClockWise);
 
         TalonFXConfigurator leftCfg = left.getConfigurator();
         leftCfg.apply(FlywheelConstants.LeftMotorPID);
         leftCfg.apply(FlywheelConstants.CoastConfig);
         leftCfg.apply(FlywheelConstants.CurrentLimits);
-        left.setInverted(Hardware.TalonFXDirectionClockWise);
+        left.setInverted(Subsystems.TalonFXDirectionClockWise);
     }
 
     @Override

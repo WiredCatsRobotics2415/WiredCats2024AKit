@@ -4,18 +4,19 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.simulation.AnalogInputSim;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.RoboRioSim;
-import frc.constants.Hardware.IntakePorts;
+import frc.constants.Subsystems.IntakeConstants;
 import frc.util.visualization.RobotVisualizer;
 
 public class IntakeIOSim implements IntakeIO {
     private DCMotorSim motor = new DCMotorSim(DCMotor.getFalcon500(1), 1, 1);
-    private AnalogInputSim closeToFlywheelSensor = new AnalogInputSim(IntakePorts.FlywheelIR);
+    private AnalogInputSim closeToFlywheelSensor = new AnalogInputSim(IntakeConstants.FlywheelIR);
 
     public IntakeIOSim() {}
 
     @Override
     public void updateInputs(IntakeIOInputsAutoLogged inputs) {
-        // inputs.sensorTrigger = (closeToFlywheelSensor.getVoltage() / 5) * 4096.0d < IntakeConstants.IRThreshold;
+        // inputs.sensorTrigger = (closeToFlywheelSensor.getVoltage() / 5) * 4096.0d <
+        // IntakeConstants.IRThreshold;
         inputs.sensorTrigger = RobotVisualizer.hasNote();
 
         inputs.motorStatorCurrent = motor.getCurrentDrawAmps();

@@ -6,8 +6,7 @@ import com.ctre.phoenix6.controls.StrictFollower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DigitalInput;
-import frc.constants.Hardware;
-import frc.constants.Hardware.ArmPorts;
+import frc.constants.Subsystems;
 import frc.constants.Subsystems.ArmConstants;
 import frc.util.hardware.REV10KPotentiometer;
 
@@ -27,14 +26,14 @@ public class ArmIOReal implements ArmIO {
     private DigitalInput limitSwitch;
 
     public ArmIOReal() {
-        left = new TalonFX(ArmPorts.LeftMotorID);
-        right = new TalonFX(ArmPorts.RightMotorID);
+        left = new TalonFX(ArmConstants.LeftMotorID);
+        right = new TalonFX(ArmConstants.RightMotorID);
         encoder = new REV10KPotentiometer(
-                ArmPorts.Potentiometer,
+                ArmConstants.Potentiometer,
                 ArmConstants.potentiometerMinVolt,
                 ArmConstants.potentiometerMaxVolt,
                 ArmConstants.potentiometerMaxAngle - ArmConstants.potentiometerMinAngle);
-        limitSwitch = new DigitalInput(ArmPorts.LimitSwitch);
+        limitSwitch = new DigitalInput(ArmConstants.LimitSwitch);
 
         configureMotors();
         BaseStatusSignal.setUpdateFrequencyForAll(
@@ -44,12 +43,12 @@ public class ArmIOReal implements ArmIO {
     }
 
     public void configureMotors() {
-        left = new TalonFX(ArmPorts.LeftMotorID);
-        left.setInverted(Hardware.TalonFXDirectionCounterClockWise);
+        left = new TalonFX(ArmConstants.LeftMotorID);
+        left.setInverted(Subsystems.TalonFXDirectionCounterClockWise);
 
-        right = new TalonFX(ArmPorts.RightMotorID);
+        right = new TalonFX(ArmConstants.RightMotorID);
         right.setControl(new StrictFollower(left.getDeviceID()));
-        right.setInverted(Hardware.TalonFXDirectionCounterClockWise);
+        right.setInverted(Subsystems.TalonFXDirectionCounterClockWise);
 
         left.setNeutralMode(NeutralModeValue.Brake);
         right.setNeutralMode(NeutralModeValue.Brake);

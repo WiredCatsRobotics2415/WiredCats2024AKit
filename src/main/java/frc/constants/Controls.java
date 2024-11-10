@@ -2,7 +2,7 @@ package frc.constants;
 
 import edu.wpi.first.wpilibj.XboxController;
 
-public class DriverControl {
+public class Controls {
     public static final double MaxDriveMeterS = 4.5;
     public static final double MaxAngularRadS = Math.PI;
     public static final double MinimumDrivePower = 0.05d;
@@ -29,5 +29,29 @@ public class DriverControl {
         public static final int RightJoystickY = XboxController.Axis.kRightX.value;
         public static final int LeftTrigger = XboxController.Axis.kLeftTrigger.value;
         public static final int RightTrigger = XboxController.Axis.kRightTrigger.value;
+    }
+
+    public static class SubwooferShot {
+        public static final double ArmAngle = 0.0;
+        public static final double LeftFlywheelSpeed = 6000;
+        public static final double RightFlywheelSpeed = 8000;
+    }
+
+    public static class AmpShot {
+        public static final double ArmAngle = 80.0;
+        public static final double LeftFlywheelSpeed = 3000;
+        public static final double RightFlywheelSpeed = 3000;
+    }
+
+    public static class FieldShotAngles {
+        public static final double MiddleCenter = 16;
+        public static final double MiddleCorner = 14.7;
+        public static final double Top = 15;
+        public static final double Bottom = 15;
+    }
+
+    public static class ShuttleRotationAngles {
+        public static final double BlueAlliance = 325.7;
+        public static final double RedAlliance = 230.7;
     }
 }
