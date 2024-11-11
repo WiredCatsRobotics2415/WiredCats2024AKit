@@ -5,12 +5,12 @@ import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.StrictFollower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import edu.wpi.first.wpilibj.DigitalInput;
+
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.constants.Subsystems;
 import frc.constants.Subsystems.ArmConstants;
-import frc.util.hardware.REV10KPotentiometer;
 
-public class ArmIOReal implements ArmIO {
+public class ArmIOThroughbore implements ArmIO {
     private TalonFX left, right;
     private double appliedVoltage;
 
@@ -22,18 +22,12 @@ public class ArmIOReal implements ArmIO {
     private StatusSignal<Double> rightSupply = right.getSupplyCurrent();
     private StatusSignal<Double> rightTemp = right.getDeviceTemp();
 
-    private REV10KPotentiometer encoder;
-    private DigitalInput limitSwitch;
+    private DutyCycleEncoder throughbore;
 
-    public ArmIOReal() {
+    public ArmIOThroughbore() {
         left = new TalonFX(ArmConstants.LeftMotorID);
         right = new TalonFX(ArmConstants.RightMotorID);
-        encoder = new REV10KPotentiometer(
-                ArmConstants.Potentiometer,
-                ArmConstants.potentiometerMinVolt,
-                ArmConstants.potentiometerMaxVolt,
-                ArmConstants.potentiometerMaxAngle - ArmConstants.potentiometerMinAngle);
-        limitSwitch = new DigitalInput(ArmConstants.LimitSwitch);
+        throughbore = new DutyCycleEncoder(ArmConstants.ThroughborePort);
 
         configureMotors();
         BaseStatusSignal.setUpdateFrequencyForAll(
@@ -69,8 +63,7 @@ public class ArmIOReal implements ArmIO {
         inputs.rightTemp = rightTemp.getValue();
 
         inputs.appliedVoltage = appliedVoltage;
-        inputs.position = encoder.getDegrees();
-        inputs.limitSwitch = limitSwitch.get();
+        inputs.position = throughbore.getAbsolutePosition();
     }
 
     @Override
@@ -83,19 +76,5 @@ public class ArmIOReal implements ArmIO {
     public void setCoast(boolean coast) {
         left.setNeutralMode(coast ? NeutralModeValue.Coast : NeutralModeValue.Brake);
         right.setNeutralMode(coast ? NeutralModeValue.Coast : NeutralModeValue.Brake);
-    }
-
-    @Override
-    public void setPotentiometerBounds(double minVolt, double maxVolt) {
-        encoder.setMinimumVolt(minVolt);
-        encoder.setMaximumVolt(maxVolt);
-    }
-
-    @Override
-    public void resetPotentiometer() {
-        double oldMaxVolt = encoder.getMaximumVolt();
-        encoder.setMaximumVolt(encoder.getVoltage());
-        double oldMinVolt = encoder.getMinimumVolt();
-        encoder.setMaximumVolt((encoder.getMaximumVolt() - oldMaxVolt) + oldMinVolt);
     }
 }

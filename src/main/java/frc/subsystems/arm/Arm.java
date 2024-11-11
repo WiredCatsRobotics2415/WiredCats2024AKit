@@ -34,7 +34,7 @@ public class Arm extends SubsystemBase {
     private static Arm instance;
 
     private Arm() {
-        io = (ArmIO) Utils.getIOImplementation(ArmIOReal.class, ArmIOSim.class, ArmIO.class);
+        io = (ArmIO) Utils.getIOImplementation(ArmIOPotentiometer.class, ArmIOSim.class, ArmIO.class);
 
         DashboardManager.getInstance()
                 .addCommand(
@@ -67,11 +67,8 @@ public class Arm extends SubsystemBase {
      * @param setpoint the setpoint state of the ProfiledPIDController, for feedforward
      */
     private void useOutput(double output, TrapezoidProfile.State setpoint) {
-        // Calculate the feedforward from the sepoint
         double feedforward = ff.calculate(setpoint.position, setpoint.velocity);
-        // Add the feedforward to the PID output to get the motor output
         double voltOut = output + feedforward;
-        // if (!limitSwitch.get()) leftMotor.setVoltage(voltOut);
         if (!isCoasting) {
             io.setVoltage(voltOut);
         }
@@ -137,19 +134,12 @@ public class Arm extends SubsystemBase {
         io.setPotentiometerBounds(ArmConstants.potentiometerMinVolt, ArmConstants.potentiometerMaxVolt);
     }
 
-    private void resetPotentiometerIfAtZero() {
-        if (inputs.limitSwitch) {
-            io.resetPotentiometer();
-        }
-    }
-
     @Override
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Arm", inputs);
 
         useOutput(pid.calculate(inputs.position), pid.getSetpoint());
-        resetPotentiometerIfAtZero();
 
         RobotVisualizer.update(inputs.position, goalInDegrees);
     }

@@ -27,6 +27,4 @@ public interface ArmIO {
     public default void setCoast(boolean coast) {}
 
     public default void setPotentiometerBounds(double minVolt, double maxVolt) {}
-
-    public default void resetPotentiometer() {}
 }

@@ -26,6 +26,7 @@ public class Subsystems {
         public static final int RightMotorID = 14;
         public static final int Potentiometer = 4;
         public static final int LimitSwitch = 1;
+        public static final int ThroughborePort = -1;
 
         public static final double kS = 0.238d;
         public static final double kV = 1e-4d; // effectively 0
