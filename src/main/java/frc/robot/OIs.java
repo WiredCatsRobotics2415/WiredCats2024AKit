@@ -111,10 +111,8 @@ public class OIs {
         }
 
         public double[] getXY() {
-            double x =
-                    MathUtil.applyDeadband(controller.getRawAxis(GulikitButtons.LeftJoystickX), Controls.Deadband);
-            double y =
-                    MathUtil.applyDeadband(controller.getRawAxis(GulikitButtons.LeftJoystickY), Controls.Deadband);
+            double x = MathUtil.applyDeadband(controller.getRawAxis(GulikitButtons.LeftJoystickX), Controls.Deadband);
+            double y = MathUtil.applyDeadband(controller.getRawAxis(GulikitButtons.LeftJoystickY), Controls.Deadband);
             double newX, newY = 0.0d;
             if (Controls.UseCurve) {
                 double angle = Math.atan2(y, x);
@@ -133,8 +131,8 @@ public class OIs {
         }
 
         public double getRotation() {
-            double deadbandCompensated = deadbandCompensation(MathUtil.applyDeadband(
-                    controller.getRawAxis(GulikitButtons.RightJoystickX), Controls.Deadband));
+            double deadbandCompensated = deadbandCompensation(
+                    MathUtil.applyDeadband(controller.getRawAxis(GulikitButtons.RightJoystickX), Controls.Deadband));
             if (Controls.UseCurve) {
                 return Math.pow(minimumPowerCompensation(deadbandCompensated), Controls.CurveExponent);
             } else {

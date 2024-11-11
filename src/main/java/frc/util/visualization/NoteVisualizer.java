@@ -26,25 +26,24 @@ public class NoteVisualizer {
     private static ArrayList<Note> currentNotes = new ArrayList<Note>();
 
     public static Command shoot(Note note) {
-        return new ScheduleCommand( // Branch off and exit immediately
-                Commands.defer(
-                                () -> {
-                                    note.setBeingShot(true);
-                                    Pose3d notePose = RobotVisualizer.getCurrentNotePose3d();
-                                    ProjectileMotion3d projectileMotion3d = new ProjectileMotion3d(notePose, shotSpeed);
+        return new ScheduleCommand(Commands.defer(
+                        () -> {
+                            note.setBeingShot(true);
+                            Pose3d notePose = RobotVisualizer.getCurrentNotePose3d();
+                            ProjectileMotion3d projectileMotion3d = new ProjectileMotion3d(notePose, shotSpeed);
 
-                                    Timer timer = new Timer();
-                                    timer.start();
-                                    return Commands.run(() -> {
-                                                note.setPose(projectileMotion3d.getPoseAtTime(timer.get() * timeScale));
-                                            })
-                                            .until(() -> note.getPose().getZ() < 0)
-                                            .finallyDo(() -> {
-                                                currentNotes.remove(note);
-                                            });
-                                },
-                                Set.of())
-                        .ignoringDisable(true));
+                            Timer timer = new Timer();
+                            timer.start();
+                            return Commands.run(() -> {
+                                        note.setPose(projectileMotion3d.getPoseAtTime(timer.get() * timeScale));
+                                    })
+                                    .until(() -> note.getPose().getZ() < 0)
+                                    .finallyDo(() -> {
+                                        currentNotes.remove(note);
+                                    });
+                        },
+                        Set.of())
+                .ignoringDisable(true));
     }
 
     public static void updateNoteTrajectory(Note note) {

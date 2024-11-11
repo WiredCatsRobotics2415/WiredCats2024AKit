@@ -168,7 +168,8 @@ public class RobotContainer {
         selectedOI
                 .binds
                 .get(Bindings.ShootClose)
-                .onTrue(flywheel.on(Controls.SubwooferShot.LeftFlywheelSpeed, Controls.SubwooferShot.RightFlywheelSpeed));
+                .onTrue(flywheel.on(
+                        Controls.SubwooferShot.LeftFlywheelSpeed, Controls.SubwooferShot.RightFlywheelSpeed));
         selectedOI.binds.get(Bindings.SpinOff).onTrue(flywheel.off());
         selectedOI
                 .binds
