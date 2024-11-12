@@ -39,8 +39,8 @@ public class Subsystems {
         public static final double veloMax = 300.0d;
         public static final double accelMax = 300.0d;
 
-        public static double potentiometerMaxVolt = 1.7d;
-        public static double potentiometerMinVolt = 0.271d;
+        public static double potentiometerMaxVolt = 1.218d;
+        public static double potentiometerMinVolt = 0.005;
         public static final double potentiometerMaxAngle = 105.7d;
         public static final double potentiometerMinAngle = 0.0d; // Min angle of arm
 

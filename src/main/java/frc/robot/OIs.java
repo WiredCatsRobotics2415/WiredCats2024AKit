@@ -111,8 +111,8 @@ public class OIs {
         }
 
         public double[] getXY() {
-            double x = MathUtil.applyDeadband(controller.getRawAxis(GulikitButtons.LeftJoystickX), Controls.Deadband);
-            double y = MathUtil.applyDeadband(controller.getRawAxis(GulikitButtons.LeftJoystickY), Controls.Deadband);
+            double x = MathUtil.applyDeadband(controller.getRawAxis(GulikitButtons.LeftJoystickY), Controls.Deadband);
+            double y = MathUtil.applyDeadband(controller.getRawAxis(GulikitButtons.LeftJoystickX), Controls.Deadband);
             double newX, newY = 0.0d;
             if (Controls.UseCurve) {
                 double angle = Math.atan2(y, x);

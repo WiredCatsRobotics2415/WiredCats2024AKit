@@ -18,6 +18,7 @@ public interface ArmIO {
         public double position = 0.0d;
         public boolean limitSwitch = false;
         public double appliedVoltage = 0.0d;
+        public double potentiometerVoltage = 0.0d;
     }
 
     public default void updateInputs(ArmIOInputsAutoLogged inputs) {}

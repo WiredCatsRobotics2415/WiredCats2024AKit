@@ -5,8 +5,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import frc.constants.RuntimeConstants;
+import frc.constants.RuntimeConstants.SimMode;
 import frc.constants.Subsystems.IntakeConstants;
-import frc.util.Utils;
+import frc.robot.Robot;
 import frc.util.driver.DashboardManager;
 import frc.util.driver.DashboardManager.LayoutConstants;
 import lombok.Getter;
@@ -24,7 +26,15 @@ public class Intake extends SubsystemBase {
     private static Intake instance;
 
     private Intake() {
-        io = (IntakeIO) Utils.getIOImplementation(IntakeIOReal.class, IntakeIOSim.class, IntakeIO.class);
+        if (Robot.isSimulation()) {
+            if (RuntimeConstants.simMode == SimMode.REPLAY) {
+                io = new IntakeIOSim();
+            } else {
+                io = new IntakeIOSim();
+            }
+        } else {
+            io = new IntakeIOReal();
+        }
 
         DashboardManager.getInstance().addBoolSupplier(true, "Intaking", () -> state, LayoutConstants.IntakeStatus);
         DashboardManager.getInstance().addBoolSupplier(true, "Intook", () -> sensorTrigger(), LayoutConstants.Intook);

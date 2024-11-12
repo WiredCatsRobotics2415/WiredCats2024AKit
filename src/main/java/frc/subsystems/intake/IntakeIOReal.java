@@ -9,7 +9,7 @@ import frc.constants.Subsystems;
 import frc.constants.Subsystems.IntakeConstants;
 
 public class IntakeIOReal implements IntakeIO {
-    private TalonFX motor;
+    private TalonFX motor = new TalonFX(IntakeConstants.IntakeMotorID);
     private AnalogInput closeToFlywheelSensor;
 
     private StatusSignal<Double> motorStatorCurrent = motor.getStatorCurrent();
@@ -17,7 +17,6 @@ public class IntakeIOReal implements IntakeIO {
     private StatusSignal<Double> motorTemp = motor.getDeviceTemp();
 
     public IntakeIOReal() {
-        motor = new TalonFX(IntakeConstants.IntakeMotorID);
         BaseStatusSignal.setUpdateFrequencyForAll(50, motorStatorCurrent, motorSupplyCurrent, motorTemp);
         configureMotor();
 

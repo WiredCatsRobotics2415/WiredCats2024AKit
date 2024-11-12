@@ -87,7 +87,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("ArmUp", new InstantCommand(() -> arm.setGoal(Controls.FieldShotAngles.Bottom)));
         NamedCommands.registerCommand("ShootMiddleCorner", ShootingCommands.shootMiddleCorner());
         NamedCommands.registerCommand("ShootSubNoFly", ShootingCommands.shootSubNoFly());
-        NamedCommands.registerCommand("AutoAlign", new AutoNoteDetect());
+        // NamedCommands.registerCommand("AutoAlign", new AutoNoteDetect());
 
         // Configure auto chooser
         autoChooser = AutoBuilder.buildAutoChooser("Top_Slap");

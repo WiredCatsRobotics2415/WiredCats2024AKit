@@ -11,6 +11,9 @@ public class VisionIOReal implements VisionIO {
     public void updateInputs(VisionIOInputsAutoLogged inputs) {
         PoseEstimate poseEstimate =
                 LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(VisionConstants.ShooterLimelightName);
+        if (poseEstimate == null) {
+            return;
+        }
         inputs.poseEstimate = poseEstimate.pose;
         inputs.poseTimestampSeconds = poseEstimate.timestampSeconds;
         inputs.poseLatency = poseEstimate.latency;

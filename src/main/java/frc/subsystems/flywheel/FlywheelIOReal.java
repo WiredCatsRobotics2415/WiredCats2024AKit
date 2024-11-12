@@ -9,8 +9,8 @@ import frc.constants.Subsystems;
 import frc.constants.Subsystems.FlywheelConstants;
 
 public class FlywheelIOReal implements FlywheelIO {
-    private TalonFX left;
-    private TalonFX right;
+    private TalonFX left = new TalonFX(FlywheelConstants.LeftMotorID);
+    private TalonFX right = new TalonFX(FlywheelConstants.RightMotorID);
     private VelocityVoltage voltageVelocity;
 
     private StatusSignal<Double> leftRotorVelocity = left.getRotorVelocity();
@@ -26,8 +26,6 @@ public class FlywheelIOReal implements FlywheelIO {
     private StatusSignal<Double> rightAppliedVolts = right.getMotorVoltage();
 
     public FlywheelIOReal() {
-        left = new TalonFX(FlywheelConstants.LeftMotorID);
-        right = new TalonFX(FlywheelConstants.RightMotorID);
         BaseStatusSignal.setUpdateFrequencyForAll(
                 50,
                 leftRotorVelocity,

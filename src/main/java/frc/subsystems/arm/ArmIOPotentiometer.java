@@ -11,7 +11,8 @@ import frc.constants.Subsystems.ArmConstants;
 import frc.util.hardware.REV10KPotentiometer;
 
 public class ArmIOPotentiometer implements ArmIO {
-    private TalonFX left, right;
+    private TalonFX left = new TalonFX(ArmConstants.LeftMotorID);
+    private TalonFX right = new TalonFX(ArmConstants.RightMotorID);
     private double appliedVoltage;
 
     private StatusSignal<Double> leftStator = left.getStatorCurrent();
@@ -26,8 +27,6 @@ public class ArmIOPotentiometer implements ArmIO {
     private DigitalInput limitSwitch;
 
     public ArmIOPotentiometer() {
-        left = new TalonFX(ArmConstants.LeftMotorID);
-        right = new TalonFX(ArmConstants.RightMotorID);
         encoder = new REV10KPotentiometer(
                 ArmConstants.Potentiometer,
                 ArmConstants.potentiometerMinVolt,
@@ -70,6 +69,7 @@ public class ArmIOPotentiometer implements ArmIO {
 
         inputs.appliedVoltage = appliedVoltage;
         inputs.position = encoder.getDegrees();
+        inputs.potentiometerVoltage = encoder.getVoltage();
         inputs.limitSwitch = limitSwitch.get();
 
         if (inputs.limitSwitch) {

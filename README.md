@@ -11,7 +11,6 @@ Significant changes made to the 2024 code:
 
 Future plans:
  - rework all commands in the commands/ folder so they look nice
- - move all limit switch logic into its own IO for the arm subsystem and create an IO for use with the rev throughbore
  - add multiple limelight pose estimation support to the vision subsystem and make the pose estimation logic in SwerveDrive realistic
     - this means that the robot considers its acceleration when filtering pose estimates like ORBIT does
  - add the robot CAD files so others can use them in Ascope
@@ -19,6 +18,7 @@ Future plans:
     - the swerve drive class itself should still be compatible with the TunerConstants data classes, so that a generated TunerConstants file can be dropped in to work (and commenting out the swervedrivetrain constructor call at the bottom obviously)
     - should also have its own odometry stack like Mechanical Advantage but instead of multiplying current wheel speed by 0.02 seconds every loop to get wheel position change, just use the current wheel position
     - also the current CTRE swerve simulator does not work if the current limit is set to 40A so this bug should be avoided
+    - also should modules to have different steer tunes (not drive tunes since it's not possible to tune them independently)
  - Add sysid commands to each class and put them on elastic (elastic works super well btw) when robot is in test mode
     - ideally test mode is its own class called "TuningMode" that operates at the same level of abstraction as RobotContainer does
       - CONSIDER using a global constant for this - more stable/clean than trying to detect a robot mode
