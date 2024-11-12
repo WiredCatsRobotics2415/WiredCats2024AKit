@@ -5,7 +5,8 @@ import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.util.driver.DashboardManager;
+import frc.util.driver.DashboardManager.LayoutConstants;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -44,7 +45,7 @@ public class Alert {
     public Alert(String group, String text, AlertType type) {
         if (!groups.containsKey(group)) {
             groups.put(group, new SendableAlerts());
-            SmartDashboard.putData(group, groups.get(group));
+            DashboardManager.getInstance().addAlertGroup(group, groups.get(group), LayoutConstants.Alerts);
         }
 
         this.text = text;

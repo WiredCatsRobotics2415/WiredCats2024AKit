@@ -1,5 +1,6 @@
 package frc.util.driver;
 
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -27,8 +28,8 @@ public class DashboardManager {
         public static final LayoutInfo AutoSelector = new LayoutInfo(0, 0, 2, 1);
     }
 
-    private ShuffleboardTab teleopTab = Shuffleboard.getTab("Dashboard");
-    private ShuffleboardTab autoTab = Shuffleboard.getTab("Auto");
+    private ShuffleboardTab teleopTab = Shuffleboard.getTab("Teleoperated");
+    private ShuffleboardTab autoTab = Shuffleboard.getTab("Autonomous");
 
     private static DashboardManager instance;
 
@@ -65,6 +66,14 @@ public class DashboardManager {
         ShuffleboardTab tab = onTeleop ? teleopTab : autoTab;
         tab.add(title, chooser)
                 .withWidget("ComboBox Chooser")
+                .withPosition(layoutInfo.x, layoutInfo.y)
+                .withSize(layoutInfo.width, layoutInfo.height);
+    }
+
+    public void addAlertGroup(String title, Sendable sendable, LayoutInfo layoutInfo) {
+        teleopTab
+                .add(title, sendable)
+                .withWidget("Alerts")
                 .withPosition(layoutInfo.x, layoutInfo.y)
                 .withSize(layoutInfo.width, layoutInfo.height);
     }

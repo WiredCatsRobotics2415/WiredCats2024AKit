@@ -8,10 +8,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.constants.RuntimeConstants;
-import frc.constants.RuntimeConstants.SimMode;
 import frc.constants.Subsystems.ArmConstants;
-import frc.robot.Robot;
+import frc.util.Utils;
 import frc.util.driver.DashboardManager;
 import frc.util.driver.DashboardManager.LayoutConstants;
 import frc.util.visualization.RobotVisualizer;
@@ -36,15 +34,16 @@ public class Arm extends SubsystemBase {
     private static Arm instance;
 
     private Arm() {
-        if (Robot.isSimulation()) {
-            if (RuntimeConstants.simMode == SimMode.REPLAY) {
-                io = new ArmIOSim();
-            } else {
-                io = new ArmIOSim();
-            }
-        } else {
-            io = new ArmIOPotentiometer();
-        }
+        // if (Robot.isSimulation()) {
+        //     if (RuntimeConstants.simMode == SimMode.REPLAY) {
+        //         io = new ArmIOSim();
+        //     } else {
+        //         io = new ArmIOSim();
+        //     }
+        // } else {
+        //     io = new ArmIOPotentiometer();
+        // }
+        io = (ArmIO) Utils.getIOImplementation(ArmIOPotentiometer.class, ArmIOSim.class, ArmIO.class);
 
         DashboardManager.getInstance()
                 .addCommand(
