@@ -35,7 +35,7 @@ public class Robot extends LoggedRobot {
     public void robotInit() {
         // Set up data receivers & replay source
         if (Robot.isReal()) {
-            Logger.addDataReceiver(new WPILOGWriter());
+            Logger.addDataReceiver(new WPILOGWriter("/home/lvuser/logs"));
             Logger.addDataReceiver(new NT4Publisher());
         } else {
             switch (RuntimeConstants.simMode) {

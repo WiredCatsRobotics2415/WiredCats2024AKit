@@ -26,7 +26,7 @@ public class Subsystems {
         public static final int RightMotorID = 14;
         public static final int Potentiometer = 4;
         public static final int LimitSwitch = 1;
-        public static final int ThroughborePort = -1;
+        public static final int ThroughborePort = 19;
 
         public static final double kS = 0.238d;
         public static final double kV = 1e-4d; // effectively 0
@@ -39,8 +39,8 @@ public class Subsystems {
         public static final double veloMax = 300.0d;
         public static final double accelMax = 300.0d;
 
-        public static double potentiometerMaxVolt = 1.218d;
-        public static double potentiometerMinVolt = 0.005;
+        public static final double potentiometerMaxVolt = 1.218d;
+        public static final double potentiometerMinVolt = 0.005;
         public static final double potentiometerMaxAngle = 105.7d;
         public static final double potentiometerMinAngle = 0.0d; // Min angle of arm
 

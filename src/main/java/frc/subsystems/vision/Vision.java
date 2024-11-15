@@ -2,10 +2,8 @@ package frc.subsystems.vision;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.constants.RuntimeConstants;
-import frc.constants.RuntimeConstants.SimMode;
-import frc.robot.Robot;
 import frc.util.LimelightHelpers.PoseEstimate;
+import frc.util.Utils;
 import org.littletonrobotics.junction.Logger;
 
 public class Vision extends SubsystemBase {
@@ -14,15 +12,7 @@ public class Vision extends SubsystemBase {
     private static Vision instance;
 
     private Vision() {
-        if (Robot.isSimulation()) {
-            if (RuntimeConstants.simMode == SimMode.REPLAY) {
-                io = new VisionIOSim();
-            } else {
-                io = new VisionIOSim();
-            }
-        } else {
-            io = new VisionIOReal();
-        }
+        io = (VisionIO) Utils.getIOImplementation(VisionIOReal.class, VisionIOSim.class, VisionIO.class);
     }
 
     public static Vision getInstance() {

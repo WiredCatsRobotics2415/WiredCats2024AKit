@@ -10,7 +10,8 @@ import frc.constants.Subsystems;
 import frc.constants.Subsystems.ArmConstants;
 
 public class ArmIOThroughbore implements ArmIO {
-    private TalonFX left, right;
+    private TalonFX left = new TalonFX(ArmConstants.LeftMotorID);
+    private TalonFX right = new TalonFX(ArmConstants.RightMotorID);
     private double appliedVoltage;
 
     private StatusSignal<Double> leftStator = left.getStatorCurrent();
@@ -24,9 +25,8 @@ public class ArmIOThroughbore implements ArmIO {
     private DutyCycleEncoder throughbore;
 
     public ArmIOThroughbore() {
-        left = new TalonFX(ArmConstants.LeftMotorID);
-        right = new TalonFX(ArmConstants.RightMotorID);
         throughbore = new DutyCycleEncoder(ArmConstants.ThroughborePort);
+        throughbore.setDistancePerRotation(ArmConstants.potentiometerMaxAngle-ArmConstants.potentiometerMinAngle);
 
         configureMotors();
         BaseStatusSignal.setUpdateFrequencyForAll(

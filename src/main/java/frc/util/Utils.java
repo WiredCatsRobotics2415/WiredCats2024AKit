@@ -21,15 +21,13 @@ public class Utils {
             if (Robot.isSimulation()) {
                 if (RuntimeConstants.simMode == SimMode.REPLAY) {
                     attemptedInstantationType = replay;
-                    return replay.getDeclaredConstructors()[0].newInstance();
                 } else {
                     attemptedInstantationType = sim;
-                    return sim.getDeclaredConstructors()[0].newInstance();
                 }
             } else {
                 attemptedInstantationType = real;
-                return real.getDeclaredConstructors()[0].newInstance();
             }
+            return attemptedInstantationType.getDeclaredConstructors()[0].newInstance();
         } catch (InstantiationException | SecurityException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
             new Alert(

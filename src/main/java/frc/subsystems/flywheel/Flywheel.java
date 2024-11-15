@@ -3,10 +3,8 @@ package frc.subsystems.flywheel;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.constants.RuntimeConstants;
-import frc.constants.RuntimeConstants.SimMode;
 import frc.constants.Subsystems.FlywheelConstants;
-import frc.robot.Robot;
+import frc.util.Utils;
 import frc.util.driver.DashboardManager;
 import frc.util.driver.DashboardManager.LayoutConstants;
 import org.littletonrobotics.junction.Logger;
@@ -21,15 +19,7 @@ public class Flywheel extends SubsystemBase {
     private static Flywheel instance;
 
     private Flywheel() {
-        if (Robot.isSimulation()) {
-            if (RuntimeConstants.simMode == SimMode.REPLAY) {
-                io = new FlywheelIOSim();
-            } else {
-                io = new FlywheelIOSim();
-            }
-        } else {
-            io = new FlywheelIOReal();
-        }
+        io = (FlywheelIO) Utils.getIOImplementation(FlywheelIOReal.class, FlywheelIOSim.class, FlywheelIO.class);
 
         DashboardManager.getInstance()
                 .addBoolSupplier(true, "Flywheel Status", () -> isOn, LayoutConstants.FlywheelStatus);

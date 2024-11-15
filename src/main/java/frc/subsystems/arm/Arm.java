@@ -34,16 +34,7 @@ public class Arm extends SubsystemBase {
     private static Arm instance;
 
     private Arm() {
-        // if (Robot.isSimulation()) {
-        //     if (RuntimeConstants.simMode == SimMode.REPLAY) {
-        //         io = new ArmIOSim();
-        //     } else {
-        //         io = new ArmIOSim();
-        //     }
-        // } else {
-        //     io = new ArmIOPotentiometer();
-        // }
-        io = (ArmIO) Utils.getIOImplementation(ArmIOPotentiometer.class, ArmIOSim.class, ArmIO.class);
+        io = (ArmIO) Utils.getIOImplementation(ArmIOThroughbore.class, ArmIOSim.class, ArmIO.class);
 
         DashboardManager.getInstance()
                 .addCommand(
