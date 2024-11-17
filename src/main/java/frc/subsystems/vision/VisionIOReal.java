@@ -9,8 +9,8 @@ public class VisionIOReal implements VisionIO {
 
     @Override
     public void updateInputs(VisionIOInputsAutoLogged inputs) {
-        PoseEstimate poseEstimate =
-                LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(VisionConstants.ShooterLimelightName);
+        PoseEstimate poseEstimate = LimelightHelpers
+            .getBotPoseEstimate_wpiBlue_MegaTag2(VisionConstants.ShooterLimelightName);
         if (poseEstimate == null) {
             return;
         }
@@ -20,11 +20,13 @@ public class VisionIOReal implements VisionIO {
         inputs.poseTagCount = poseEstimate.tagCount;
 
         inputs.noteAngleX = LimelightHelpers.getTX(VisionConstants.IntakeLimelightName);
-        inputs.noteVisible = LimelightHelpers.getTA(VisionConstants.IntakeLimelightName) != 0;
+        inputs.noteVisible = LimelightHelpers
+            .getTA(VisionConstants.IntakeLimelightName) != 0;
     }
 
     @Override
     public void setRobotOrientation(double yaw) {
-        LimelightHelpers.SetRobotOrientation(VisionConstants.ShooterLimelightName, yaw, 0, 0, 0, 0, 0);
+        LimelightHelpers.SetRobotOrientation(VisionConstants.ShooterLimelightName, yaw, 0,
+            0, 0, 0, 0);
     }
 }

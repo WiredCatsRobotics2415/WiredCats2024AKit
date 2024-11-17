@@ -34,8 +34,7 @@ public class RobotContainer {
     private final Intake intake = Intake.getInstance();
     private final Claw claw = Claw.getInstance();
 
-    @Getter
-    private OI selectedOI;
+    @Getter private OI selectedOI;
 
     private SendableChooser<Command> autoChooser;
 
@@ -64,39 +63,43 @@ public class RobotContainer {
     /** Triggers intended to be run on startup */
     private void configureStartupTriggers() {
         new Trigger(RobotController::getUserButton)
-                .onTrue(new InstantCommand(() -> arm.coast(), arm).ignoringDisable(true));
+            .onTrue(new InstantCommand(() -> arm.coast(), arm).ignoringDisable(true));
     }
 
     private void setupAuto() {
         // Autonomous named commands
         NamedCommands.registerCommand("Intake", intake.intakeAndWaitForNote());
         NamedCommands.registerCommand("ShootSub", ShootingCommands.subwooferAuto());
-        NamedCommands.registerCommand("ShootWhileMoving", ShootingCommands.shootWhileMoving());
+        NamedCommands.registerCommand("ShootWhileMoving",
+            ShootingCommands.shootWhileMoving());
         NamedCommands.registerCommand("ShootSlap", claw.fire());
-        NamedCommands.registerCommand(
-                "FlywheelOn",
-                flywheel.on(
-                        Controls.SubwooferShot.LeftFlywheelSpeed,
-                        Controls.SubwooferShot.RightFlywheelSpeed)); // Shoot next to subwoofer.
+        NamedCommands.registerCommand("FlywheelOn",
+            flywheel.on(Controls.SubwooferShot.LeftFlywheelSpeed,
+                Controls.SubwooferShot.RightFlywheelSpeed)); // Shoot next to subwoofer.
         NamedCommands.registerCommand("FlywheelOff", flywheel.off());
-        NamedCommands.registerCommand("Amp", new InstantCommand(() -> arm.setGoal(Controls.AmpShot.ArmAngle)));
+        NamedCommands.registerCommand("Amp",
+            new InstantCommand(() -> arm.setGoal(Controls.AmpShot.ArmAngle)));
         NamedCommands.registerCommand("ShootMiddle", ShootingCommands.shootMiddle());
         NamedCommands.registerCommand("ShootBottom", ShootingCommands.shootBottom());
         NamedCommands.registerCommand("shootTop", ShootingCommands.shootTop());
         NamedCommands.registerCommand("ArmDown", new InstantCommand(() -> arm.setGoal(0)));
-        NamedCommands.registerCommand("ArmUp", new InstantCommand(() -> arm.setGoal(Controls.FieldShotAngles.Bottom)));
-        NamedCommands.registerCommand("ShootMiddleCorner", ShootingCommands.shootMiddleCorner());
+        NamedCommands.registerCommand("ArmUp",
+            new InstantCommand(() -> arm.setGoal(Controls.FieldShotAngles.Bottom)));
+        NamedCommands.registerCommand("ShootMiddleCorner",
+            ShootingCommands.shootMiddleCorner());
         NamedCommands.registerCommand("ShootSubNoFly", ShootingCommands.shootSubNoFly());
         // NamedCommands.registerCommand("AutoAlign", new AutoNoteDetect());
 
         // Configure auto chooser
         autoChooser = AutoBuilder.buildAutoChooser("Top_Slap");
-        DashboardManager.getInstance().addChooser(false, "Auto", autoChooser, LayoutConstants.AutoSelector);
+        DashboardManager.getInstance().addChooser(false, "Auto", autoChooser,
+            LayoutConstants.AutoSelector);
     }
 
     /**
-     * Prepares the robot for teleoperated control. Gets the OI selected, configures all binds, and
-     * calls any teleopInit methods on subsystems. CLEARS ALL ROBOT BUTTON EVENTLOOP BINDS
+     * Prepares the robot for teleoperated control. Gets the OI selected, configures all
+     * binds, and calls any teleopInit methods on subsystems. CLEARS ALL ROBOT BUTTON
+     * EVENTLOOP BINDS
      */
     public void teleopInit() {
         neutralizeSubsystems();
@@ -106,8 +109,8 @@ public class RobotContainer {
     }
 
     /**
-     * Sets the selected OI variable to the smartdashboard selected OI. Intended to be run in
-     * teleopInit.
+     * Sets the selected OI variable to the smartdashboard selected OI. Intended to be run
+     * in teleopInit.
      */
     private void prepareOI() {
         switch (OI.oiChooser.getSelected()) {
@@ -121,8 +124,8 @@ public class RobotContainer {
     }
 
     /**
-     * Adds all Commands to the Triggers in the selectedOI's binds map, clears previous binds Intended
-     * to be run in teleopInit.
+     * Adds all Commands to the Triggers in the selectedOI's binds map, clears previous
+     * binds Intended to be run in teleopInit.
      */
     private void configureButtonBindings() {
         Robot.buttonEventLoop.clear();
@@ -130,25 +133,19 @@ public class RobotContainer {
         // Swerve
         swerveDrive.setDefaultCommand(swerveDrive.applyRequest(() -> {
             double[] input = selectedOI.getXY();
-            return swerveDrive
-                    .drive
-                    .withVelocityX(-input[0] * Controls.MaxDriveMeterS)
-                    .withVelocityY(-input[1] * Controls.MaxDriveMeterS)
-                    .withRotationalRate(-selectedOI.getRotation() * Controls.MaxAngularRadS);
+            return swerveDrive.drive.withVelocityX(-input[0] * Controls.MaxDriveMeterS)
+                .withVelocityY(-input[1] * Controls.MaxDriveMeterS)
+                .withRotationalRate(-selectedOI.getRotation() * Controls.MaxAngularRadS);
         }));
-        selectedOI
-                .binds
-                .get(Bindings.PigeonReset)
-                .onTrue(new InstantCommand(
-                        () -> {
-                            swerveDrive.seedFieldRelative();
-                        },
-                        swerveDrive));
+        selectedOI.binds.get(Bindings.PigeonReset).onTrue(new InstantCommand(() -> {
+            swerveDrive.seedFieldRelative();
+        }, swerveDrive));
 
         // Intake
         selectedOI.binds.get(Bindings.Intake).onTrue(intake.toggleIntake());
         // selectedOI.binds.get("Intake").onTrue(intake.intakeNote());
-        selectedOI.binds.get(Bindings.ManualOuttake).onTrue(intake.out()).onFalse(intake.off());
+        selectedOI.binds.get(Bindings.ManualOuttake).onTrue(intake.out())
+            .onFalse(intake.off());
         // selectedOI.binds.get("ManualIntake").onTrue(intake.in()).onFalse(intake.off());
 
         // Arm manual
@@ -165,16 +162,12 @@ public class RobotContainer {
 
         // Flywheel
         // TODO: change call to onFromSmartDashboard to a call to on(flwyheelSppeds)
-        selectedOI
-                .binds
-                .get(Bindings.ShootClose)
-                .onTrue(flywheel.on(
-                        Controls.SubwooferShot.LeftFlywheelSpeed, Controls.SubwooferShot.RightFlywheelSpeed));
+        selectedOI.binds.get(Bindings.ShootClose)
+            .onTrue(flywheel.on(Controls.SubwooferShot.LeftFlywheelSpeed,
+                Controls.SubwooferShot.RightFlywheelSpeed));
         selectedOI.binds.get(Bindings.SpinOff).onTrue(flywheel.off());
-        selectedOI
-                .binds
-                .get(Bindings.SpinUpToAmp)
-                .onTrue(flywheel.on(Controls.AmpShot.LeftFlywheelSpeed, Controls.AmpShot.RightFlywheelSpeed));
+        selectedOI.binds.get(Bindings.SpinUpToAmp).onTrue(flywheel
+            .on(Controls.AmpShot.LeftFlywheelSpeed, Controls.AmpShot.RightFlywheelSpeed));
         selectedOI.binds.get(Bindings.FixAll).whileTrue(new FixAll());
         // selectedOI.binds.get(Bindings.ArmAngle).onTrue(arm.moveToShotAngle());
 

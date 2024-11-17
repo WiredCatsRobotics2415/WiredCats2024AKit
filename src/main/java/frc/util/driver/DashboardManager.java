@@ -11,8 +11,7 @@ import java.util.function.BooleanSupplier;
 
 public class DashboardManager {
     public static class LayoutConstants {
-        public static final record LayoutInfo(int x, int y, int width, int height) {}
-        ;
+        public static final record LayoutInfo(int x, int y, int width, int height) {};
 
         public static final LayoutInfo MatchTime = new LayoutInfo(0, 0, 3, 2);
         public static final LayoutInfo IntakeStatus = new LayoutInfo(0, 2, 3, 2);
@@ -34,11 +33,10 @@ public class DashboardManager {
     private static DashboardManager instance;
 
     private DashboardManager() {
-        teleopTab
-                .addNumber("Match Time", () -> DriverStation.getMatchTime())
-                .withWidget("Match Time")
-                .withPosition(LayoutConstants.MatchTime.x, LayoutConstants.MatchTime.y)
-                .withSize(LayoutConstants.MatchTime.width, LayoutConstants.MatchTime.height);
+        teleopTab.addNumber("Match Time", () -> DriverStation.getMatchTime())
+            .withWidget("Match Time")
+            .withPosition(LayoutConstants.MatchTime.x, LayoutConstants.MatchTime.y)
+            .withSize(LayoutConstants.MatchTime.width, LayoutConstants.MatchTime.height);
     }
 
     public static DashboardManager getInstance() {
@@ -46,35 +44,33 @@ public class DashboardManager {
         return instance;
     }
 
-    public void addBoolSupplier(boolean onTeleop, String title, BooleanSupplier supplier, LayoutInfo layoutInfo) {
+    public void addBoolSupplier(boolean onTeleop, String title, BooleanSupplier supplier,
+        LayoutInfo layoutInfo) {
         ShuffleboardTab tab = onTeleop ? teleopTab : autoTab;
-        tab.addBoolean(title, supplier)
-                .withWidget("Boolean Box")
-                .withPosition(layoutInfo.x, layoutInfo.y)
-                .withSize(layoutInfo.width, layoutInfo.height);
+        tab.addBoolean(title, supplier).withWidget("Boolean Box")
+            .withPosition(layoutInfo.x, layoutInfo.y)
+            .withSize(layoutInfo.width, layoutInfo.height);
     }
 
-    public void addCommand(boolean onTeleop, String title, Command command, LayoutInfo layoutInfo) {
+    public void addCommand(boolean onTeleop, String title, Command command,
+        LayoutInfo layoutInfo) {
         ShuffleboardTab tab = onTeleop ? teleopTab : autoTab;
-        tab.add(title, command)
-                .withWidget("Command")
-                .withPosition(layoutInfo.x, layoutInfo.y)
-                .withSize(layoutInfo.width, layoutInfo.height);
+        tab.add(title, command).withWidget("Command")
+            .withPosition(layoutInfo.x, layoutInfo.y)
+            .withSize(layoutInfo.width, layoutInfo.height);
     }
 
-    public void addChooser(boolean onTeleop, String title, SendableChooser chooser, LayoutInfo layoutInfo) {
+    public void addChooser(boolean onTeleop, String title, SendableChooser chooser,
+        LayoutInfo layoutInfo) {
         ShuffleboardTab tab = onTeleop ? teleopTab : autoTab;
-        tab.add(title, chooser)
-                .withWidget("ComboBox Chooser")
-                .withPosition(layoutInfo.x, layoutInfo.y)
-                .withSize(layoutInfo.width, layoutInfo.height);
+        tab.add(title, chooser).withWidget("ComboBox Chooser")
+            .withPosition(layoutInfo.x, layoutInfo.y)
+            .withSize(layoutInfo.width, layoutInfo.height);
     }
 
     public void addAlertGroup(String title, Sendable sendable, LayoutInfo layoutInfo) {
-        teleopTab
-                .add(title, sendable)
-                .withWidget("Alerts")
-                .withPosition(layoutInfo.x, layoutInfo.y)
-                .withSize(layoutInfo.width, layoutInfo.height);
+        teleopTab.add(title, sendable).withWidget("Alerts")
+            .withPosition(layoutInfo.x, layoutInfo.y)
+            .withSize(layoutInfo.width, layoutInfo.height);
     }
 }

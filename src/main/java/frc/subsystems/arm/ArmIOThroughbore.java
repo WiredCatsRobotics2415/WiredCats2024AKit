@@ -27,7 +27,8 @@ public class ArmIOThroughbore extends RealIO implements ArmIO {
 
     public ArmIOThroughbore() {
         throughbore = new DutyCycleEncoder(ArmConstants.ThroughborePort);
-        throughbore.setDistancePerRotation(ArmConstants.potentiometerMaxAngle - ArmConstants.potentiometerMinAngle);
+        throughbore.setDistancePerRotation(
+            ArmConstants.potentiometerMaxAngle - ArmConstants.potentiometerMinAngle);
 
         configureMotors();
     }
@@ -42,14 +43,15 @@ public class ArmIOThroughbore extends RealIO implements ArmIO {
 
         left.setNeutralMode(NeutralModeValue.Brake);
         right.setNeutralMode(NeutralModeValue.Brake);
-        BaseStatusSignal.setUpdateFrequencyForAll(
-                50, leftStator, leftSupply, leftTemp, rightStator, rightSupply, rightTemp);
+        BaseStatusSignal.setUpdateFrequencyForAll(50, leftStator, leftSupply, leftTemp,
+            rightStator, rightSupply, rightTemp);
         registerMotors(left, right);
     }
 
     @Override
     public void updateInputs(ArmIOInputsAutoLogged inputs) {
-        BaseStatusSignal.refreshAll(leftStator, leftSupply, leftTemp, rightStator, rightSupply, rightTemp);
+        BaseStatusSignal.refreshAll(leftStator, leftSupply, leftTemp, rightStator,
+            rightSupply, rightTemp);
 
         inputs.leftConnected = left.isAlive();
         inputs.leftStatorCurrent = leftStator.getValue();

@@ -19,13 +19,13 @@ public class Flywheel extends SubsystemBase {
     private static Flywheel instance;
 
     private Flywheel() {
-        io = (FlywheelIO) Utils.getIOImplementation(FlywheelIOReal.class, FlywheelIOSim.class, FlywheelIO.class);
+        io = (FlywheelIO) Utils.getIOImplementation(FlywheelIOReal.class,
+            FlywheelIOSim.class, FlywheelIO.class);
 
-        DashboardManager.getInstance()
-                .addBoolSupplier(true, "Flywheel Status", () -> isOn, LayoutConstants.FlywheelStatus);
-        DashboardManager.getInstance()
-                .addBoolSupplier(
-                        true, "Ready to Shoot", () -> withinSetGoal() && isOn, LayoutConstants.FlywheelUpToSpeed);
+        DashboardManager.getInstance().addBoolSupplier(true, "Flywheel Status", () -> isOn,
+            LayoutConstants.FlywheelStatus);
+        DashboardManager.getInstance().addBoolSupplier(true, "Ready to Shoot",
+            () -> withinSetGoal() && isOn, LayoutConstants.FlywheelUpToSpeed);
     }
 
     public static Flywheel getInstance() {
@@ -55,14 +55,15 @@ public class Flywheel extends SubsystemBase {
         });
     }
 
-    /** True if the current speed of the left shooter motor is within + or - GoalToleranceRPM */
+    /**
+     * True if the current speed of the left shooter motor is within + or - GoalToleranceRPM
+     */
     public boolean withinSetGoal() {
-        return MathUtil.isNear(leftSetRPM, inputs.leftVelocity, FlywheelConstants.GoalToleranceRPM);
+        return MathUtil.isNear(leftSetRPM, inputs.leftVelocity,
+            FlywheelConstants.GoalToleranceRPM);
     }
 
-    public boolean isOn() {
-        return isOn;
-    }
+    public boolean isOn() { return isOn; }
 
     @Override
     public void periodic() {

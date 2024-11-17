@@ -13,21 +13,22 @@ import lombok.Getter;
 import org.littletonrobotics.junction.Logger;
 
 public class Intake extends SubsystemBase {
-    @Getter
-    private boolean isBeingIntook = false;
+    @Getter private boolean isBeingIntook = false;
 
-    @Getter
-    private boolean state = false;
+    @Getter private boolean state = false;
 
     private IntakeIO io;
     private IntakeIOInputsAutoLogged inputs = new IntakeIOInputsAutoLogged();
     private static Intake instance;
 
     private Intake() {
-        io = (IntakeIO) Utils.getIOImplementation(IntakeIOReal.class, IntakeIOSim.class, IntakeIO.class);
+        io = (IntakeIO) Utils.getIOImplementation(IntakeIOReal.class, IntakeIOSim.class,
+            IntakeIO.class);
 
-        DashboardManager.getInstance().addBoolSupplier(true, "Intaking", () -> state, LayoutConstants.IntakeStatus);
-        DashboardManager.getInstance().addBoolSupplier(true, "Intook", () -> sensorTrigger(), LayoutConstants.Intook);
+        DashboardManager.getInstance().addBoolSupplier(true, "Intaking", () -> state,
+            LayoutConstants.IntakeStatus);
+        DashboardManager.getInstance().addBoolSupplier(true, "Intook",
+            () -> sensorTrigger(), LayoutConstants.Intook);
     }
 
     public static Intake getInstance() {
@@ -65,9 +66,10 @@ public class Intake extends SubsystemBase {
     }
 
     /**
-     * @return Command that toggles between intaking and not intaking. Does NOT take into account
-     *     other motor modes, ie. If this has been called, and the out Command is run, then when this
-     *     command is run again, the motor will just be turned off.
+     * @return Command that toggles between intaking and not intaking. Does NOT take into
+     *         account other motor modes, ie. If this has been called, and the out Command
+     *         is run, then when this command is run again, the motor will just be turned
+     *         off.
      */
     public Command toggleIntake() {
         return runOnce(() -> {
@@ -82,17 +84,13 @@ public class Intake extends SubsystemBase {
     }
 
     public Command intakeAndWaitForNote() {
-        return new SequentialCommandGroup(
-                in(),
-                new InstantCommand(() -> {
-                    state = true;
-                }),
-                new WaitUntilCommand(() -> hasNote()),
-                new InstantCommand(() -> {
-                    state = false;
-                }),
-                // new WaitCommand(0.2),
-                stopNoteForShooting());
+        return new SequentialCommandGroup(in(), new InstantCommand(() -> {
+            state = true;
+        }), new WaitUntilCommand(() -> hasNote()), new InstantCommand(() -> {
+            state = false;
+        }),
+            // new WaitCommand(0.2),
+            stopNoteForShooting());
     }
 
     /**

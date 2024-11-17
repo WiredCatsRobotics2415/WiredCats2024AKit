@@ -23,9 +23,8 @@ public class DriverFeedback {
     }
 
     public static Command blinkInConfirmation() {
-        return new InstantCommand(() -> flashBackLimelight())
-                .andThen(new WaitCommand(1.5))
-                .andThen(new InstantCommand(() -> turnOffBackLimelight()));
+        return new InstantCommand(() -> flashBackLimelight()).andThen(new WaitCommand(1.5))
+            .andThen(new InstantCommand(() -> turnOffBackLimelight()));
     }
 
     private static boolean controllerExists() {
@@ -39,7 +38,8 @@ public class DriverFeedback {
 
     public static void rumbleSoft() {
         if (!controllerExists()) return;
-        currentRumbleableController.setRumble(RumbleType.kBothRumble, Controls.RumbleSoftValue);
+        currentRumbleableController.setRumble(RumbleType.kBothRumble,
+            Controls.RumbleSoftValue);
     }
 
     public static void noRumble() {

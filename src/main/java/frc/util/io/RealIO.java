@@ -7,8 +7,10 @@ import frc.constants.RuntimeConstants;
 /**
  * All IOs that work with real hardware should extend this class
  *
- * <p>Provides default method to check if motors are enabled (ie. this subsystem has not been
+ * <p>
+ * Provides default method to check if motors are enabled (ie. this subsystem has not been
  * disabled) so actuation methods can have a way to disable themselves
+ *
  * <p>
  */
 public class RealIO {
@@ -31,8 +33,8 @@ public class RealIO {
     }
 
     /**
-     * Register all motors in the io. Calls optimizeBusUtilization on TalonFXs only if tuningMode is
-     * false
+     * Register all motors in the io. Calls optimizeBusUtilization on TalonFXs only if
+     * tuningMode is false
      *
      * @param motors motors in the io with their names that are displayed on
      */

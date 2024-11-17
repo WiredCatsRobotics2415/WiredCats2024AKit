@@ -17,8 +17,8 @@ public class AutoNoteDetect extends Command {
     private Intake intake = Intake.getInstance();
 
     // SWERVE
-    private final SwerveRequest.RobotCentric driveForward =
-            new SwerveRequest.RobotCentric().withVelocityX(0.5 * Controls.MaxDriveMeterS);
+    private final SwerveRequest.RobotCentric driveForward = new SwerveRequest.RobotCentric()
+        .withVelocityX(0.5 * Controls.MaxDriveMeterS);
 
     public AutoNoteDetect() {
         addRequirements(TunerConstants.DriveTrain);
@@ -35,12 +35,14 @@ public class AutoNoteDetect extends Command {
             // turns robot to current pose + x-degree
             Rotation2d pose = TunerConstants.DriveTrain.getState().Pose.getRotation();
 
-            if (!MathUtil.isNear(0, vision.getNoteAngleOnX(), SwerveConstants.HeadingControllerTolerance)) {
+            if (!MathUtil.isNear(0, vision.getNoteAngleOnX(),
+                SwerveConstants.HeadingControllerTolerance)) {
 
                 // System.out.println(pose);
                 // System.out.println(pose.minus(Rotation2d.fromDegrees(vision.getNoteAngleOnX())));
 
-                TunerConstants.DriveTrain.setControl(TunerConstants.DriveTrain.driveFacingAngle.withTargetDirection(
+                TunerConstants.DriveTrain.setControl(
+                    TunerConstants.DriveTrain.driveFacingAngle.withTargetDirection(
                         pose.minus(Rotation2d.fromDegrees(vision.getNoteAngleOnX()))));
             } else {
                 TunerConstants.DriveTrain.setControl(driveForward);

@@ -28,14 +28,16 @@ public class IntakeIOReal extends RealIO implements IntakeIO {
         motor.setNeutralMode(NeutralModeValue.Brake);
         motor.getConfigurator().apply(IntakeConstants.CurrentLimit);
 
-        BaseStatusSignal.setUpdateFrequencyForAll(50, motorStatorCurrent, motorSupplyCurrent, motorTemp);
+        BaseStatusSignal.setUpdateFrequencyForAll(50, motorStatorCurrent,
+            motorSupplyCurrent, motorTemp);
         registerMotors(motor);
     }
 
     @Override
     public void updateInputs(IntakeIOInputsAutoLogged inputs) {
         BaseStatusSignal.refreshAll(motorStatorCurrent, motorSupplyCurrent, motorTemp);
-        inputs.sensorTrigger = closeToFlywheelSensor.getValue() < Subsystems.IntakeConstants.IRThreshold;
+        inputs.sensorTrigger = closeToFlywheelSensor
+            .getValue() < Subsystems.IntakeConstants.IRThreshold;
 
         inputs.motorConnected = true;
         inputs.motorStatorCurrent = motorStatorCurrent.getValue();

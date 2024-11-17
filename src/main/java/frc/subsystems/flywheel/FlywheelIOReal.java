@@ -44,34 +44,17 @@ public class FlywheelIOReal extends RealIO implements FlywheelIO {
         leftCfg.apply(FlywheelConstants.CurrentLimits);
         left.setInverted(Subsystems.TalonFXDirectionClockWise);
 
-        BaseStatusSignal.setUpdateFrequencyForAll(
-                50,
-                leftRotorVelocity,
-                leftTemp,
-                leftStatorCurrent,
-                leftSupplyCurrent,
-                leftAppliedVolts,
-                rightRotorVelocity,
-                rightTemp,
-                rightStatorCurrent,
-                rightSupplyCurrent,
-                rightAppliedVolts);
+        BaseStatusSignal.setUpdateFrequencyForAll(50, leftRotorVelocity, leftTemp,
+            leftStatorCurrent, leftSupplyCurrent, leftAppliedVolts, rightRotorVelocity,
+            rightTemp, rightStatorCurrent, rightSupplyCurrent, rightAppliedVolts);
         registerMotors(left, right);
     }
 
     @Override
     public void updateInputs(FlywheelIOInputsAutoLogged inputs) {
-        BaseStatusSignal.refreshAll(
-                leftRotorVelocity,
-                leftTemp,
-                leftStatorCurrent,
-                leftSupplyCurrent,
-                leftAppliedVolts,
-                rightRotorVelocity,
-                rightTemp,
-                rightStatorCurrent,
-                rightSupplyCurrent,
-                rightAppliedVolts);
+        BaseStatusSignal.refreshAll(leftRotorVelocity, leftTemp, leftStatorCurrent,
+            leftSupplyCurrent, leftAppliedVolts, rightRotorVelocity, rightTemp,
+            rightStatorCurrent, rightSupplyCurrent, rightAppliedVolts);
 
         inputs.leftConnected = left.isAlive();
         inputs.leftVelocity = FlywheelConstants.rpsToRPM(leftRotorVelocity.getValue());
@@ -92,6 +75,7 @@ public class FlywheelIOReal extends RealIO implements FlywheelIO {
     public void setRPM(double leftRPM, double rightRPM) {
         if (!areMotorsEnabled()) return;
         left.setControl(voltageVelocity.withVelocity(FlywheelConstants.rpmToRPS(leftRPM)));
-        right.setControl(voltageVelocity.withVelocity(FlywheelConstants.rpmToRPS(rightRPM)));
+        right
+            .setControl(voltageVelocity.withVelocity(FlywheelConstants.rpmToRPS(rightRPM)));
     }
 }

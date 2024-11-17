@@ -16,7 +16,8 @@ public class TargetHotspot extends Command {
 
     @Override
     public void initialize() {
-        Translation2d currentPose = TunerConstants.DriveTrain.getState().Pose.getTranslation();
+        Translation2d currentPose = TunerConstants.DriveTrain.getState().Pose
+            .getTranslation();
         // System.out.println(currentPose);
         Hotspot closestHotspot = Measurements.Hotspots.get(0);
         double minDistance = closestHotspot.get2d().getDistance(currentPose);
@@ -44,7 +45,5 @@ public class TargetHotspot extends Command {
     }
 
     @Override
-    public boolean isFinished() {
-        return currentPathfindingCommand.isFinished();
-    }
+    public boolean isFinished() { return currentPathfindingCommand.isFinished(); }
 }

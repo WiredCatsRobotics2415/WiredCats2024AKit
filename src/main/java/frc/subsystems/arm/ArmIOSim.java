@@ -9,14 +9,13 @@ public class ArmIOSim implements ArmIO {
     private double appliedVoltage;
 
     private final SingleJointedArmSim simArm = new SingleJointedArmSim(
-            DCMotor.getFalcon500(2),
-            ArmConstants.RotorToArmGearRatio,
-            SingleJointedArmSim.estimateMOI(ArmConstants.ArmLengthMeters, ArmConstants.ApproximateMassKg),
-            ArmConstants.ArmLengthMeters,
-            Units.degreesToRadians(ArmConstants.potentiometerMinAngle),
-            Units.degreesToRadians(ArmConstants.potentiometerMaxAngle),
-            true,
-            Units.degreesToRadians(ArmConstants.potentiometerMinAngle));
+        DCMotor.getFalcon500(2), ArmConstants.RotorToArmGearRatio,
+        SingleJointedArmSim.estimateMOI(ArmConstants.ArmLengthMeters,
+            ArmConstants.ApproximateMassKg),
+        ArmConstants.ArmLengthMeters,
+        Units.degreesToRadians(ArmConstants.potentiometerMinAngle),
+        Units.degreesToRadians(ArmConstants.potentiometerMaxAngle), true,
+        Units.degreesToRadians(ArmConstants.potentiometerMinAngle));
 
     public ArmIOSim() {
         simArm.setState(Units.degreesToRadians(ArmConstants.potentiometerMinAngle), 0);
@@ -39,5 +38,6 @@ public class ArmIOSim implements ArmIO {
     }
 
     // I refuse to implement the potentiometer modifying methods here.
-    // In the sim world, the potentiometer is attached to the actual arm axle not geared to it.
+    // In the sim world, the potentiometer is attached to the actual arm axle not geared to
+    // it.
 }

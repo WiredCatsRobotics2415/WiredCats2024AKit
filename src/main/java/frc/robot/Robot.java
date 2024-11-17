@@ -17,13 +17,12 @@ public class Robot extends LoggedRobot {
     private Command autonomousCommand;
     private RobotContainer robotContainer;
 
-    @Getter
-    private static SimulatedEnvironment simEnv;
+    @Getter private static SimulatedEnvironment simEnv;
 
     /**
-     * The BUTTON ONLY event loop for the robot. Gets polled during robotPeriodic. Intended for use in
-     * {@link OIs}'s binds maps, and is cleared before {@link RobotContainer}'s configureButtonBinds
-     * is called.
+     * The BUTTON ONLY event loop for the robot. Gets polled during robotPeriodic. Intended
+     * for use in {@link OIs}'s binds maps, and is cleared before {@link RobotContainer}'s
+     * configureButtonBinds is called.
      */
     public static final EventLoop buttonEventLoop = new EventLoop();
 
@@ -51,7 +50,8 @@ public class Robot extends LoggedRobot {
                     setUseTiming(false); // Run as fast as possible
                     String logPath = LogFileUtil.findReplayLog();
                     Logger.setReplaySource(new WPILOGReader(logPath));
-                    Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
+                    Logger.addDataReceiver(
+                        new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
                     break;
             }
         }
@@ -67,7 +67,10 @@ public class Robot extends LoggedRobot {
         buttonEventLoop.poll();
     }
 
-    /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+    /**
+     * This autonomous runs the autonomous command selected by your {@link RobotContainer}
+     * class.
+     */
     @Override
     public void autonomousInit() {
         if (simEnv != null) simEnv.resetField(true);

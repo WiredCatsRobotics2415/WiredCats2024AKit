@@ -12,7 +12,8 @@ public class Vision extends SubsystemBase {
     private static Vision instance;
 
     private Vision() {
-        io = (VisionIO) Utils.getIOImplementation(VisionIOReal.class, VisionIOSim.class, VisionIO.class);
+        io = (VisionIO) Utils.getIOImplementation(VisionIOReal.class, VisionIOSim.class,
+            VisionIO.class);
     }
 
     public static Vision getInstance() {
@@ -25,27 +26,16 @@ public class Vision extends SubsystemBase {
     }
 
     public PoseEstimate getShooterResults() {
-        return new PoseEstimate(
-                inputs.poseEstimate,
-                inputs.poseTimestampSeconds,
-                inputs.poseLatency,
-                inputs.poseTagCount,
-                0.0d,
-                0.0d,
-                0.0d,
-                null);
+        return new PoseEstimate(inputs.poseEstimate, inputs.poseTimestampSeconds,
+            inputs.poseLatency, inputs.poseTagCount, 0.0d, 0.0d, 0.0d, null);
     }
 
     /**
      * @return Gets the horizontal angle returned by the intake limelight's note detection.
      */
-    public double getNoteAngleOnX() {
-        return inputs.noteAngleX;
-    }
+    public double getNoteAngleOnX() { return inputs.noteAngleX; }
 
-    public boolean isNoteVisible() {
-        return inputs.noteVisible;
-    }
+    public boolean isNoteVisible() { return inputs.noteVisible; }
 
     @Override
     public void periodic() {

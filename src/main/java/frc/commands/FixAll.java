@@ -9,9 +9,9 @@ import frc.constants.Subsystems.SwerveConstants;
 import frc.constants.TunerConstants;
 
 /**
- * The "FixAll" preset (FIX ALL subsystems to their ideal position for scoring). Instance can be
- * reused (ie. you can construct this command once for a button binding). Automatically compensates
- * for alliance.
+ * The "FixAll" preset (FIX ALL subsystems to their ideal position for scoring). Instance
+ * can be reused (ie. you can construct this command once for a button binding).
+ * Automatically compensates for alliance.
  */
 public class FixAll extends Command {
     private Rotation2d goalHeading;
@@ -23,9 +23,10 @@ public class FixAll extends Command {
     @Override
     public void initialize() {
         Translation2d speakerDist = Measurements.getSpeakerLocation()
-                .minus(TunerConstants.DriveTrain.getState().Pose.getTranslation());
-        goalHeading = Rotation2d.fromRadians(Math.atan2(speakerDist.getY(), speakerDist.getX()))
-                .plus(Rotation2d.fromDegrees(180));
+            .minus(TunerConstants.DriveTrain.getState().Pose.getTranslation());
+        goalHeading = Rotation2d
+            .fromRadians(Math.atan2(speakerDist.getY(), speakerDist.getX()))
+            .plus(Rotation2d.fromDegrees(180));
     }
 
     @Override
@@ -35,13 +36,14 @@ public class FixAll extends Command {
         // swerveheading = (arctan(y/x))
 
         TunerConstants.DriveTrain.setControl(
-                TunerConstants.DriveTrain.driveFacingAngle.withTargetDirection(goalHeading));
+            TunerConstants.DriveTrain.driveFacingAngle.withTargetDirection(goalHeading));
     }
 
     @Override
     public boolean isFinished() {
-        double currentRotation =
-                TunerConstants.DriveTrain.getState().Pose.getRotation().getDegrees();
-        return MathUtil.isNear(goalHeading.getDegrees(), currentRotation, SwerveConstants.HeadingControllerTolerance);
+        double currentRotation = TunerConstants.DriveTrain.getState().Pose.getRotation()
+            .getDegrees();
+        return MathUtil.isNear(goalHeading.getDegrees(), currentRotation,
+            SwerveConstants.HeadingControllerTolerance);
     }
 }

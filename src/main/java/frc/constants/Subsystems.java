@@ -53,7 +53,8 @@ public class Subsystems {
     }
 
     public class SwerveConstants {
-        public static final PhoenixPIDController HeadingPIDController = new PhoenixPIDController(3, 0, 0.3);
+        public static final PhoenixPIDController HeadingPIDController = new PhoenixPIDController(
+            3, 0, 0.3);
 
         static {
             HeadingPIDController.enableContinuousInput(-Math.PI, Math.PI);
@@ -66,20 +67,17 @@ public class Subsystems {
         public static final int LeftMotorID = 20;
         public static final int RightMotorID = 16;
 
-        public static final Slot0Configs LeftMotorPID =
-                new Slot0Configs().withKV(0.14).withKP(0.25);
-        public static final Slot0Configs RightMotorPID =
-                new Slot0Configs().withKV(0.14).withKP(0.2);
+        public static final Slot0Configs LeftMotorPID = new Slot0Configs().withKV(0.14)
+            .withKP(0.25);
+        public static final Slot0Configs RightMotorPID = new Slot0Configs().withKV(0.14)
+            .withKP(0.2);
 
         public static final CurrentLimitsConfigs CurrentLimits = new CurrentLimitsConfigs()
-                .withStatorCurrentLimitEnable(true)
-                .withStatorCurrentLimit(80)
-                .withSupplyCurrentLimitEnable(true)
-                .withSupplyCurrentLimit(30)
-                .withSupplyCurrentThreshold(60)
-                .withSupplyTimeThreshold(0.1);
-        public static final MotorOutputConfigs CoastConfig =
-                new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast);
+            .withStatorCurrentLimitEnable(true).withStatorCurrentLimit(80)
+            .withSupplyCurrentLimitEnable(true).withSupplyCurrentLimit(30)
+            .withSupplyCurrentThreshold(60).withSupplyTimeThreshold(0.1);
+        public static final MotorOutputConfigs CoastConfig = new MotorOutputConfigs()
+            .withNeutralMode(NeutralModeValue.Coast);
 
         public static final double GoalToleranceRPM = 250;
 
@@ -98,8 +96,8 @@ public class Subsystems {
         public static final int IntakeMotorID = 18;
         public static final int FlywheelIR = 5;
 
-        public static final CurrentLimitsConfigs CurrentLimit =
-                new CurrentLimitsConfigs().withSupplyCurrentThreshold(40);
+        public static final CurrentLimitsConfigs CurrentLimit = new CurrentLimitsConfigs()
+            .withSupplyCurrentThreshold(40);
 
         public static final double IntakeSpeed = 0.6;
         public static final double OuttakeSpeed = -0.35;

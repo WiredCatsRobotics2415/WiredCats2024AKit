@@ -6,8 +6,10 @@ import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import frc.constants.Subsystems.ClawConstants;
 
 public class ClawIOSim implements ClawIO {
-    private DCMotorSim motor = new DCMotorSim(DCMotor.getNeo550(1), ClawConstants.GearRatio, 0.01);
-    private PIDController pidController = new PIDController(ClawConstants.Kp, 0, ClawConstants.Kd);
+    private DCMotorSim motor = new DCMotorSim(DCMotor.getNeo550(1), ClawConstants.GearRatio,
+        0.01);
+    private PIDController pidController = new PIDController(ClawConstants.Kp, 0,
+        ClawConstants.Kd);
     private double appliedVoltage = 0.0d;
 
     public ClawIOSim() {}

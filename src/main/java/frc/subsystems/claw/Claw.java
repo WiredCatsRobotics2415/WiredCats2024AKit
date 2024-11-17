@@ -17,7 +17,8 @@ public class Claw extends SubsystemBase {
     private static Claw instance;
 
     private Claw() {
-        io = (ClawIO) Utils.getIOImplementation(ClawIOReal.class, ClawIOSim.class, ClawIO.class);
+        io = (ClawIO) Utils.getIOImplementation(ClawIOReal.class, ClawIOSim.class,
+            ClawIO.class);
     }
 
     public static Claw getInstance() {
@@ -30,8 +31,8 @@ public class Claw extends SubsystemBase {
     }
 
     /**
-     * @return Command that moves the claw to interfere with the note path. intended to be used to
-     *     prevent note from contacting flywheels
+     * @return Command that moves the claw to interfere with the note path. intended to be
+     *         used to prevent note from contacting flywheels
      */
     public Command reverse() {
         return new InstantCommand(() -> {
@@ -49,9 +50,8 @@ public class Claw extends SubsystemBase {
             offset = 0;
             io.setEncoderPosition(0);
             run(() -> goToPosition(ClawConstants.MoveDistance + oldOffset))
-                    .andThen(new WaitCommand(0.5))
-                    .andThen(run(() -> goToPosition(0)))
-                    .schedule();
+                .andThen(new WaitCommand(0.5)).andThen(run(() -> goToPosition(0)))
+                .schedule();
             RobotVisualizer.launchNote();
         });
     }
@@ -59,9 +59,7 @@ public class Claw extends SubsystemBase {
     /**
      * @return current position of the claw.
      */
-    private double getPosition() {
-        return inputs.position;
-    }
+    private double getPosition() { return inputs.position; }
 
     @Override
     public void periodic() {

@@ -28,11 +28,9 @@ public class ArmIOPotentiometer extends RealIO implements ArmIO {
     private DigitalInput limitSwitch;
 
     public ArmIOPotentiometer() {
-        encoder = new REV10KPotentiometer(
-                ArmConstants.Potentiometer,
-                ArmConstants.potentiometerMinVolt,
-                ArmConstants.potentiometerMaxVolt,
-                ArmConstants.potentiometerMaxAngle - ArmConstants.potentiometerMinAngle);
+        encoder = new REV10KPotentiometer(ArmConstants.Potentiometer,
+            ArmConstants.potentiometerMinVolt, ArmConstants.potentiometerMaxVolt,
+            ArmConstants.potentiometerMaxAngle - ArmConstants.potentiometerMinAngle);
         limitSwitch = new DigitalInput(ArmConstants.LimitSwitch);
 
         configureMotors();
@@ -48,14 +46,15 @@ public class ArmIOPotentiometer extends RealIO implements ArmIO {
 
         left.setNeutralMode(NeutralModeValue.Brake);
         right.setNeutralMode(NeutralModeValue.Brake);
-        BaseStatusSignal.setUpdateFrequencyForAll(
-                50, leftStator, leftSupply, leftTemp, rightStator, rightSupply, rightTemp);
+        BaseStatusSignal.setUpdateFrequencyForAll(50, leftStator, leftSupply, leftTemp,
+            rightStator, rightSupply, rightTemp);
         registerMotors(left, right);
     }
 
     @Override
     public void updateInputs(ArmIOInputsAutoLogged inputs) {
-        BaseStatusSignal.refreshAll(leftStator, leftSupply, leftTemp, rightStator, rightSupply, rightTemp);
+        BaseStatusSignal.refreshAll(leftStator, leftSupply, leftTemp, rightStator,
+            rightSupply, rightTemp);
 
         inputs.leftConnected = left.isAlive();
         inputs.leftStatorCurrent = leftStator.getValue();

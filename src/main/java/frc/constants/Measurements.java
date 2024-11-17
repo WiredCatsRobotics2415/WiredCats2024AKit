@@ -19,8 +19,8 @@ public class Measurements {
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
             return alliance.get() == DriverStation.Alliance.Red
-                    ? RedSpeaker.toTranslation2d()
-                    : BlueSpeaker.toTranslation2d();
+                ? RedSpeaker.toTranslation2d()
+                : BlueSpeaker.toTranslation2d();
         }
         return BlueSpeaker.toTranslation2d();
     }
@@ -42,22 +42,31 @@ public class Measurements {
 
     static {
         // Blue alliance side
-        DefaultFieldNotes.add(new Translation3d(Units.inchesToMeters(114), Units.inchesToMeters(161.638), 0));
-        DefaultFieldNotes.add(new Translation3d(Units.inchesToMeters(114), Units.inchesToMeters(218.638), 0));
-        DefaultFieldNotes.add(new Translation3d(Units.inchesToMeters(114), Units.inchesToMeters(275.638), 0));
+        DefaultFieldNotes.add(
+            new Translation3d(Units.inchesToMeters(114), Units.inchesToMeters(161.638), 0));
+        DefaultFieldNotes.add(
+            new Translation3d(Units.inchesToMeters(114), Units.inchesToMeters(218.638), 0));
+        DefaultFieldNotes.add(
+            new Translation3d(Units.inchesToMeters(114), Units.inchesToMeters(275.638), 0));
         // Centerline
-        DefaultFieldNotes.add(new Translation3d(Units.inchesToMeters(325.6115), Units.inchesToMeters(29.638), 0));
-        DefaultFieldNotes.add(new Translation3d(Units.inchesToMeters(325.6115), Units.inchesToMeters(95.638), 0));
-        DefaultFieldNotes.add(new Translation3d(Units.inchesToMeters(325.6115), Units.inchesToMeters(161.638), 0));
-        DefaultFieldNotes.add(new Translation3d(Units.inchesToMeters(325.6115), Units.inchesToMeters(227.638), 0));
-        DefaultFieldNotes.add(new Translation3d(Units.inchesToMeters(325.6115), Units.inchesToMeters(293.638), 0));
+        DefaultFieldNotes.add(new Translation3d(Units.inchesToMeters(325.6115),
+            Units.inchesToMeters(29.638), 0));
+        DefaultFieldNotes.add(new Translation3d(Units.inchesToMeters(325.6115),
+            Units.inchesToMeters(95.638), 0));
+        DefaultFieldNotes.add(new Translation3d(Units.inchesToMeters(325.6115),
+            Units.inchesToMeters(161.638), 0));
+        DefaultFieldNotes.add(new Translation3d(Units.inchesToMeters(325.6115),
+            Units.inchesToMeters(227.638), 0));
+        DefaultFieldNotes.add(new Translation3d(Units.inchesToMeters(325.6115),
+            Units.inchesToMeters(293.638), 0));
     }
 
     public static final double NoteDiameter = Units.inchesToMeters(14);
 
-    public static final Transform2d IntakeDownTransform = new Transform2d(0.5525, 0, new Rotation2d());
+    public static final Transform2d IntakeDownTransform = new Transform2d(0.5525, 0,
+        new Rotation2d());
 
     public static final Transform3d BackLLTransform = new Transform3d(
-            new Translation3d(Units.inchesToMeters(-12.815), 0, Units.inchesToMeters(10)),
-            new Rotation3d(Units.degreesToRadians(-90), Units.degreesToRadians(30), 0));
+        new Translation3d(Units.inchesToMeters(-12.815), 0, Units.inchesToMeters(10)),
+        new Rotation3d(Units.degreesToRadians(-90), Units.degreesToRadians(30), 0));
 }

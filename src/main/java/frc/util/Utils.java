@@ -10,8 +10,8 @@ public class Utils {
     /**
      * Select the correct IO implementation based on the runtime mode.
      *
-     * @param real The IO if the robot is on real hardware
-     * @param sim The physics simulation IO
+     * @param real   The IO if the robot is on real hardware
+     * @param sim    The physics simulation IO
      * @param replay The replay IO
      * @return The instantiated IO (MUST be cast to correct IO class)
      */
@@ -28,15 +28,14 @@ public class Utils {
                 attemptedInstantationType = real;
             }
             return attemptedInstantationType.getDeclaredConstructors()[0].newInstance();
-        } catch (InstantiationException | SecurityException | IllegalAccessException | InvocationTargetException e) {
+        } catch (InstantiationException | SecurityException | IllegalAccessException
+            | InvocationTargetException e) {
             e.printStackTrace();
             System.out.println("COULD NOT INSTANTIATE IO IMPLEMENTATION FOR CLASS "
-                    + attemptedInstantationType.getName()
-                    + "; SEE ERROR MESSAGE ABOVE (NOT THE CASTEXCEPTION)");
-            new Alert(
-                            "COULD NOT INSTANTIATE IO IMPLEMENTATION FOR CLASS " + attemptedInstantationType.getName(),
-                            AlertType.ERROR)
-                    .set(true);
+                + attemptedInstantationType.getName()
+                + "; SEE ERROR MESSAGE ABOVE (NOT THE CASTEXCEPTION)");
+            new Alert("COULD NOT INSTANTIATE IO IMPLEMENTATION FOR CLASS "
+                + attemptedInstantationType.getName(), AlertType.ERROR).set(true);
         }
         return new Object();
     }

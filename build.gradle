@@ -159,9 +159,9 @@ spotless {
         removeUnusedImports()
         trimTrailingWhitespace()
         endWithNewline()
-        googleJavaFormat()
-        palantirJavaFormat()
-        eclipse('4.26').configFile('formatter.xml')
+        //googleJavaFormat()
+        //palantirJavaFormat()
+        eclipse().configFile('formatter.xml')
     }
     groovyGradle {
         target fileTree(".") {

@@ -31,7 +31,8 @@ public class ClawIOReal extends RealIO implements ClawIO {
         pidController.setFF(ClawConstants.Ks);
         pidController.setP(ClawConstants.Kp);
         pidController.setD(ClawConstants.Kd);
-        pidController.setOutputRange(-ClawConstants.OutputExtrema, ClawConstants.OutputExtrema);
+        pidController.setOutputRange(-ClawConstants.OutputExtrema,
+            ClawConstants.OutputExtrema);
         // motor.setClosedLoopRampRate(0.5); //slows down claw
         // pidController.setPositionPIDWrappingEnabled(true);
         // pidController.setPositionPIDWrappingMaxInput(1);
@@ -45,7 +46,7 @@ public class ClawIOReal extends RealIO implements ClawIO {
 
         inputs.motorStatorCurrent = motor.getOutputCurrent();
         inputs.motorTemp = motor.getMotorTemperature();
-        inputs.appliedVoltage = motor.getBusVoltage() * motor.getAppliedOutput(); // bro sparkmax api is so braindead
+        inputs.appliedVoltage = motor.getBusVoltage() * motor.getAppliedOutput();
     }
 
     @Override

@@ -8,17 +8,16 @@ public class REV10KPotentiometer {
     private AnalogInput input;
 
     @Getter
-    @Setter
-    private double minimumVolt;
+    @Setter private double minimumVolt;
 
     @Getter
-    @Setter
-    private double maximumVolt;
+    @Setter private double maximumVolt;
 
     private double fullVoltRange;
     private double fullAngleRange;
 
-    public REV10KPotentiometer(int port, double minimumVolt, double maximumVolt, double fullAngleRange) {
+    public REV10KPotentiometer(int port, double minimumVolt, double maximumVolt,
+        double fullAngleRange) {
         this.input = new AnalogInput(port);
         this.minimumVolt = minimumVolt;
         this.maximumVolt = maximumVolt;
@@ -27,10 +26,9 @@ public class REV10KPotentiometer {
     }
 
     public double getDegrees() {
-        return fullAngleRange - (((input.getAverageVoltage() - minimumVolt) / fullVoltRange) * fullAngleRange);
+        return fullAngleRange -
+            (((input.getAverageVoltage() - minimumVolt) / fullVoltRange) * fullAngleRange);
     }
 
-    public double getVoltage() {
-        return input.getAverageVoltage();
-    }
+    public double getVoltage() { return input.getAverageVoltage(); }
 }

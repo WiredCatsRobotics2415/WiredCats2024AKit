@@ -9,7 +9,8 @@ import frc.util.visualization.RobotVisualizer;
 
 public class IntakeIOSim implements IntakeIO {
     private DCMotorSim motor = new DCMotorSim(DCMotor.getFalcon500(1), 1, 1);
-    private AnalogInputSim closeToFlywheelSensor = new AnalogInputSim(IntakeConstants.FlywheelIR);
+    private AnalogInputSim closeToFlywheelSensor = new AnalogInputSim(
+        IntakeConstants.FlywheelIR);
 
     public IntakeIOSim() {}
 

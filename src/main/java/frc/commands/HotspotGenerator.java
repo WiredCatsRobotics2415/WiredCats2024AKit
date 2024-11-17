@@ -11,18 +11,19 @@ public class HotspotGenerator {
     private ArrayList<Hotspot> hotspots = new ArrayList<>();
     private Command currentTargetingCommand;
 
-    /** Constructs all Hotspots with thier appropriate positions, according to hotspots.webp. */
+    /**
+     * Constructs all Hotspots with thier appropriate positions, according to hotspots.webp.
+     */
     public HotspotGenerator() {
         hotspots.add(new Hotspot(0.66, 4.39)); // Subwoofer bottom
         hotspots.add(new Hotspot(1.3, 5.54)); // Subwoofer middle
         hotspots.add(new Hotspot(0.74, 6.64)); // Subwoofer top
         /*
-        hotspots.add(new Hotspot(2.6, 0.96)); // Amp
-        hotspots.add(new Hotspot(2.6, 5.6)); // Furthest down
-        hotspots.add(new Hotspot(3.6, 1.7)); // Top note
-        hotspots.add(new Hotspot(3.6, 3.1)); // Middle note
-        hotspots.add(new Hotspot(3.6, 4.8)); // Bottom note
-        */
+         * hotspots.add(new Hotspot(2.6, 0.96)); // Amp hotspots.add(new Hotspot(2.6, 5.6));
+         * // Furthest down hotspots.add(new Hotspot(3.6, 1.7)); // Top note
+         * hotspots.add(new Hotspot(3.6, 3.1)); // Middle note hotspots.add(new Hotspot(3.6,
+         * 4.8)); // Bottom note
+         */
     }
 
     public static HotspotGenerator getInstance() {
@@ -41,11 +42,12 @@ public class HotspotGenerator {
     }
 
     /**
-     * @return a Command that is intended to run on SwerveDrive to go to the nearest hotspot, based on
-     *     the robot's current pose.
+     * @return a Command that is intended to run on SwerveDrive to go to the nearest
+     *         hotspot, based on the robot's current pose.
      */
     public Command targetClosest() {
-        Translation2d currentPose = TunerConstants.DriveTrain.getState().Pose.getTranslation();
+        Translation2d currentPose = TunerConstants.DriveTrain.getState().Pose
+            .getTranslation();
         Hotspot closestHotspot = hotspots.get(0);
         double minDistance = closestHotspot.get2d().getDistance(currentPose);
         for (Hotspot hotspot : hotspots) {

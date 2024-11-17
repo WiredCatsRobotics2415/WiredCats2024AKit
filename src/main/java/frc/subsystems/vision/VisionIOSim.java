@@ -17,8 +17,10 @@ public class VisionIOSim implements VisionIO {
 
     @Override
     public void updateInputs(VisionIOInputsAutoLogged inputs) {
-        if (drive == null) inputs.poseEstimate = new Pose2d();
-        else inputs.poseEstimate = drive.getState().Pose;
+        if (drive == null)
+            inputs.poseEstimate = new Pose2d();
+        else
+            inputs.poseEstimate = drive.getState().Pose;
         inputs.poseLatency = 0.0d;
         inputs.poseTimestampSeconds = Timer.getFPGATimestamp();
 
