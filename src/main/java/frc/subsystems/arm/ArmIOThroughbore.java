@@ -8,8 +8,9 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.constants.Subsystems;
 import frc.constants.Subsystems.ArmConstants;
+import frc.util.io.RealIO;
 
-public class ArmIOThroughbore implements ArmIO {
+public class ArmIOThroughbore extends RealIO implements ArmIO {
     private TalonFX left = new TalonFX(ArmConstants.LeftMotorID);
     private TalonFX right = new TalonFX(ArmConstants.RightMotorID);
     private double appliedVoltage;
@@ -26,13 +27,9 @@ public class ArmIOThroughbore implements ArmIO {
 
     public ArmIOThroughbore() {
         throughbore = new DutyCycleEncoder(ArmConstants.ThroughborePort);
-        throughbore.setDistancePerRotation(ArmConstants.potentiometerMaxAngle-ArmConstants.potentiometerMinAngle);
+        throughbore.setDistancePerRotation(ArmConstants.potentiometerMaxAngle - ArmConstants.potentiometerMinAngle);
 
         configureMotors();
-        BaseStatusSignal.setUpdateFrequencyForAll(
-                50, leftStator, leftSupply, leftTemp, rightStator, rightSupply, rightTemp);
-        left.optimizeBusUtilization();
-        right.optimizeBusUtilization();
     }
 
     public void configureMotors() {
@@ -45,6 +42,9 @@ public class ArmIOThroughbore implements ArmIO {
 
         left.setNeutralMode(NeutralModeValue.Brake);
         right.setNeutralMode(NeutralModeValue.Brake);
+        BaseStatusSignal.setUpdateFrequencyForAll(
+                50, leftStator, leftSupply, leftTemp, rightStator, rightSupply, rightTemp);
+        registerMotors(left, right);
     }
 
     @Override
@@ -67,6 +67,7 @@ public class ArmIOThroughbore implements ArmIO {
 
     @Override
     public void setVoltage(double voltage) {
+        if (!areMotorsEnabled()) return;
         appliedVoltage = voltage;
         left.setVoltage(voltage);
     }

@@ -6,8 +6,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import frc.constants.Subsystems.ClawConstants;
+import frc.util.io.RealIO;
 
-public class ClawIOReal implements ClawIO {
+public class ClawIOReal extends RealIO implements ClawIO {
     private CANSparkMax motor;
     private SparkPIDController pidController;
     private RelativeEncoder relativeEncoder;
@@ -17,7 +18,7 @@ public class ClawIOReal implements ClawIO {
         configureMotor();
     }
 
-    public void configureMotor() {
+    private void configureMotor() {
         motor.restoreFactoryDefaults();
         // motor.setInverted(true);
         motor.setSmartCurrentLimit(ClawConstants.CurrentLimit);
@@ -35,6 +36,7 @@ public class ClawIOReal implements ClawIO {
         // pidController.setPositionPIDWrappingEnabled(true);
         // pidController.setPositionPIDWrappingMaxInput(1);
         // pidController.setPositionPIDWrappingMinInput(-1);
+        registerMotors(motor);
     }
 
     @Override
@@ -48,6 +50,7 @@ public class ClawIOReal implements ClawIO {
 
     @Override
     public void setPosition(double position) {
+        if (!areMotorsEnabled()) return;
         pidController.setReference(position, ControlType.kPosition);
     }
 

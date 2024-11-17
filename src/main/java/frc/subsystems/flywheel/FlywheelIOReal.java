@@ -7,8 +7,9 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import frc.constants.Subsystems;
 import frc.constants.Subsystems.FlywheelConstants;
+import frc.util.io.RealIO;
 
-public class FlywheelIOReal implements FlywheelIO {
+public class FlywheelIOReal extends RealIO implements FlywheelIO {
     private TalonFX left = new TalonFX(FlywheelConstants.LeftMotorID);
     private TalonFX right = new TalonFX(FlywheelConstants.RightMotorID);
     private VelocityVoltage voltageVelocity;
@@ -26,22 +27,8 @@ public class FlywheelIOReal implements FlywheelIO {
     private StatusSignal<Double> rightAppliedVolts = right.getMotorVoltage();
 
     public FlywheelIOReal() {
-        BaseStatusSignal.setUpdateFrequencyForAll(
-                50,
-                leftRotorVelocity,
-                leftTemp,
-                leftStatorCurrent,
-                leftSupplyCurrent,
-                leftAppliedVolts,
-                rightRotorVelocity,
-                rightTemp,
-                rightStatorCurrent,
-                rightSupplyCurrent,
-                rightAppliedVolts);
         voltageVelocity = new VelocityVoltage(0, 0, false, 0, 0, false, false, false);
         configMotors();
-        left.optimizeBusUtilization();
-        right.optimizeBusUtilization();
     }
 
     private void configMotors() {
@@ -56,6 +43,20 @@ public class FlywheelIOReal implements FlywheelIO {
         leftCfg.apply(FlywheelConstants.CoastConfig);
         leftCfg.apply(FlywheelConstants.CurrentLimits);
         left.setInverted(Subsystems.TalonFXDirectionClockWise);
+
+        BaseStatusSignal.setUpdateFrequencyForAll(
+                50,
+                leftRotorVelocity,
+                leftTemp,
+                leftStatorCurrent,
+                leftSupplyCurrent,
+                leftAppliedVolts,
+                rightRotorVelocity,
+                rightTemp,
+                rightStatorCurrent,
+                rightSupplyCurrent,
+                rightAppliedVolts);
+        registerMotors(left, right);
     }
 
     @Override
@@ -89,6 +90,7 @@ public class FlywheelIOReal implements FlywheelIO {
 
     @Override
     public void setRPM(double leftRPM, double rightRPM) {
+        if (!areMotorsEnabled()) return;
         left.setControl(voltageVelocity.withVelocity(FlywheelConstants.rpmToRPS(leftRPM)));
         right.setControl(voltageVelocity.withVelocity(FlywheelConstants.rpmToRPS(rightRPM)));
     }

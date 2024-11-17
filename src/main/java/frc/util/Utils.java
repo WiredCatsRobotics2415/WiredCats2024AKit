@@ -30,6 +30,9 @@ public class Utils {
             return attemptedInstantationType.getDeclaredConstructors()[0].newInstance();
         } catch (InstantiationException | SecurityException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
+            System.out.println("COULD NOT INSTANTIATE IO IMPLEMENTATION FOR CLASS "
+                    + attemptedInstantationType.getName()
+                    + "; SEE ERROR MESSAGE ABOVE (NOT THE CASTEXCEPTION)");
             new Alert(
                             "COULD NOT INSTANTIATE IO IMPLEMENTATION FOR CLASS " + attemptedInstantationType.getName(),
                             AlertType.ERROR)

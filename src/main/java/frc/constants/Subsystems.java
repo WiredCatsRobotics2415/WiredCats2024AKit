@@ -21,6 +21,8 @@ public class Subsystems {
     /** Looking from the BACK of the Motor */
     public static final boolean SparkMaxDirectionCounterClockWise = true;
 
+    public static final int MotorOverheatWarningC = 80;
+
     public class ArmConstants {
         public static final int LeftMotorID = 32;
         public static final int RightMotorID = 14;
@@ -36,8 +38,8 @@ public class Subsystems {
         public static final double kP = 0.18d;
         public static final double kD = 0.0033d;
 
-        public static final double veloMax = 300.0d;
-        public static final double accelMax = 300.0d;
+        public static final double veloMax = 50.0d;
+        public static final double accelMax = 50.0d;
 
         public static final double potentiometerMaxVolt = 1.218d;
         public static final double potentiometerMinVolt = 0.005;

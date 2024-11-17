@@ -7,8 +7,9 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.AnalogInput;
 import frc.constants.Subsystems;
 import frc.constants.Subsystems.IntakeConstants;
+import frc.util.io.RealIO;
 
-public class IntakeIOReal implements IntakeIO {
+public class IntakeIOReal extends RealIO implements IntakeIO {
     private TalonFX motor = new TalonFX(IntakeConstants.IntakeMotorID);
     private AnalogInput closeToFlywheelSensor;
 
@@ -17,19 +18,18 @@ public class IntakeIOReal implements IntakeIO {
     private StatusSignal<Double> motorTemp = motor.getDeviceTemp();
 
     public IntakeIOReal() {
-        BaseStatusSignal.setUpdateFrequencyForAll(50, motorStatorCurrent, motorSupplyCurrent, motorTemp);
         configureMotor();
 
         closeToFlywheelSensor = new AnalogInput(IntakeConstants.FlywheelIR);
     }
 
     private void configureMotor() {
-        motor.optimizeBusUtilization();
         motor.setInverted(Subsystems.TalonFXDirectionCounterClockWise);
         motor.setNeutralMode(NeutralModeValue.Brake);
         motor.getConfigurator().apply(IntakeConstants.CurrentLimit);
-        // motor.getConfigurator().apply(new
-        // ClosedLoopRampsConfigs().withDutyCycleClosedLoopRampPeriod(0.2));
+
+        BaseStatusSignal.setUpdateFrequencyForAll(50, motorStatorCurrent, motorSupplyCurrent, motorTemp);
+        registerMotors(motor);
     }
 
     @Override
@@ -45,11 +45,13 @@ public class IntakeIOReal implements IntakeIO {
 
     @Override
     public void on(double speed) {
+        if (!areMotorsEnabled()) return;
         motor.set(speed);
     }
 
     @Override
     public void off() {
+        if (!areMotorsEnabled()) return;
         motor.set(0);
     }
 }

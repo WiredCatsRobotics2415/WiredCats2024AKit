@@ -22,6 +22,7 @@ Future plans:
  - Add sysid commands to each class and put them on elastic (elastic works super well btw) when robot is in test mode
     - ideally test mode is its own class called "TuningMode" that operates at the same level of abstraction as RobotContainer does
       - CONSIDER using a global constant for this - more stable/clean than trying to detect a robot mode
+      - Tuning mode should also prevent real IOs from calling optimizeBusUtilization()
     - also make all appropriate constants loggedtunablenumbers (like Mechanical Advantage does) and make them available for editing on elastic in test mode
       - see how mech adv made theirs for inspiration
  - network alerts

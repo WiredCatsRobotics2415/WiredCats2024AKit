@@ -9,8 +9,9 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import frc.constants.Subsystems;
 import frc.constants.Subsystems.ArmConstants;
 import frc.util.hardware.REV10KPotentiometer;
+import frc.util.io.RealIO;
 
-public class ArmIOPotentiometer implements ArmIO {
+public class ArmIOPotentiometer extends RealIO implements ArmIO {
     private TalonFX left = new TalonFX(ArmConstants.LeftMotorID);
     private TalonFX right = new TalonFX(ArmConstants.RightMotorID);
     private double appliedVoltage;
@@ -35,13 +36,9 @@ public class ArmIOPotentiometer implements ArmIO {
         limitSwitch = new DigitalInput(ArmConstants.LimitSwitch);
 
         configureMotors();
-        BaseStatusSignal.setUpdateFrequencyForAll(
-                50, leftStator, leftSupply, leftTemp, rightStator, rightSupply, rightTemp);
-        left.optimizeBusUtilization();
-        right.optimizeBusUtilization();
     }
 
-    public void configureMotors() {
+    private void configureMotors() {
         left = new TalonFX(ArmConstants.LeftMotorID);
         left.setInverted(Subsystems.TalonFXDirectionCounterClockWise);
 
@@ -51,6 +48,9 @@ public class ArmIOPotentiometer implements ArmIO {
 
         left.setNeutralMode(NeutralModeValue.Brake);
         right.setNeutralMode(NeutralModeValue.Brake);
+        BaseStatusSignal.setUpdateFrequencyForAll(
+                50, leftStator, leftSupply, leftTemp, rightStator, rightSupply, rightTemp);
+        registerMotors(left, right);
     }
 
     @Override
@@ -79,6 +79,7 @@ public class ArmIOPotentiometer implements ArmIO {
 
     @Override
     public void setVoltage(double voltage) {
+        if (!areMotorsEnabled()) return;
         appliedVoltage = voltage;
         left.setVoltage(voltage);
     }

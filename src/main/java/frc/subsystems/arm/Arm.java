@@ -34,7 +34,7 @@ public class Arm extends SubsystemBase {
     private static Arm instance;
 
     private Arm() {
-        io = (ArmIO) Utils.getIOImplementation(ArmIOThroughbore.class, ArmIOSim.class, ArmIO.class);
+        io = (ArmIO) Utils.getIOImplementation(ArmIOPotentiometer.class, ArmIOSim.class, ArmIO.class);
 
         DashboardManager.getInstance()
                 .addCommand(
